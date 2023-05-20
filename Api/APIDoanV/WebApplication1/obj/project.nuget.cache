@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "5fqDMrLOgW7bIpqRibVt1+OPuhGVa8YwHmlBHstSShTk8DKdq58jUFjsfxV0bLay1BN5BuaI45+iP+2Vyx9aUw==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\ASUS\\Desktop\\API\\APIDoanV\\WebApplication1\\WebApplication1.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\ASUS\\.nuget\\packages\\microsoft.netcore.app.host.win-x64\\3.1.25\\microsoft.netcore.app.host.win-x64.3.1.25.nupkg.sha512"
+  ],
+  "logs": []
+}

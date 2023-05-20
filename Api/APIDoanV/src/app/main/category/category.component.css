@@ -1,0 +1,29 @@
+.tables{
+    width: 100%;
+  }
+  .tables tr{
+    line-height: 60px;
+  }
+ 
+  #icon_admin{
+   display: flex;
+   justify-content: space-between;
+   width: 100px;
+  }
+  #paging{
+    float: right;
+  }
+
+  .modal-contain{
+    position: absolute;
+    top:5%;
+    width: 50%;
+    height:80%;
+    left: 30%;
+    /* background-color:rgba(232, 223, 223, 0.92); */
+}
+.row-toolbar{
+    height: 200px;
+    width: 100%;
+    /* background-color: rebeccapurple; */
+}

@@ -1,0 +1,574 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="APIModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="bill_detail_ban">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="char" MaxLength="20" Nullable="false" />
+          <Property Name="id_bill_ban" Type="char" MaxLength="20" Nullable="false" />
+          <Property Name="listsanpham" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="id_kh" Type="char" MaxLength="20" Nullable="false" />
+          <Property Name="tongtien" Type="int" />
+        </EntityType>
+        <EntityType Name="bill_detail_nhap">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="char" MaxLength="20" Nullable="false" />
+          <Property Name="id_bill_nhap" Type="char" MaxLength="20" Nullable="false" />
+          <Property Name="id_sp" Type="char" MaxLength="20" Nullable="false" />
+          <Property Name="sl" Type="int" Nullable="false" />
+          <Property Name="don_vi" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="created_at" Type="date" />
+          <Property Name="updated_at" Type="date" />
+        </EntityType>
+        <EntityType Name="bills_ban">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="char" MaxLength="20" Nullable="false" />
+          <Property Name="id_kh" Type="char" MaxLength="20" />
+          <Property Name="ngay_dat" Type="date" />
+          <Property Name="tong_tien" Type="float" />
+          <Property Name="trangthai" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="ghichu" Type="nvarchar" MaxLength="500" />
+          <Property Name="ten_kh" Type="varchar" MaxLength="200" Nullable="false" />
+        </EntityType>
+        <EntityType Name="bills_nhap">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="char" MaxLength="20" Nullable="false" />
+          <Property Name="id_ncc" Type="char" MaxLength="20" />
+          <Property Name="id_nhanvien" Type="char" MaxLength="20" Nullable="false" />
+          <Property Name="date_order" Type="date" />
+          <Property Name="tong_tien" Type="float" />
+          <Property Name="thanh_toan" Type="varchar" MaxLength="200" />
+          <Property Name="note" Type="nvarchar" MaxLength="500" />
+          <Property Name="created_at" Type="date" />
+          <Property Name="updated_at" Type="date" />
+        </EntityType>
+        <EntityType Name="khach_hang">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="char" MaxLength="20" Nullable="false" />
+          <Property Name="ten_kh" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="email" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="dia_chi" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="sdt" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="note" Type="text" />
+        </EntityType>
+        <EntityType Name="loai_sp">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="char" MaxLength="20" Nullable="false" />
+          <Property Name="tenloai" Type="nvarchar" MaxLength="100" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'API.dbo.news' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="news">
+          <Key>
+            <PropertyRef Name="id_new" />
+            <PropertyRef Name="title" />
+            <PropertyRef Name="content" />
+            <PropertyRef Name="image" />
+          </Key>
+          <Property Name="id_new" Type="char" MaxLength="20" Nullable="false" />
+          <Property Name="title" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="content" Type="nvarchar" MaxLength="1000" Nullable="false" />
+          <Property Name="image" Type="varchar" MaxLength="200" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'API.dbo.nha_cung_cap' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="nha_cung_cap">
+          <Key>
+            <PropertyRef Name="id" />
+            <PropertyRef Name="ten_ncc" />
+            <PropertyRef Name="diachi_ncc" />
+            <PropertyRef Name="email" />
+            <PropertyRef Name="sdt" />
+          </Key>
+          <Property Name="id" Type="char" MaxLength="20" Nullable="false" />
+          <Property Name="ten_ncc" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="diachi_ncc" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="email" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="sdt" Type="varchar" MaxLength="15" Nullable="false" />
+        </EntityType>
+        <EntityType Name="san_pham">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="char" MaxLength="20" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="100" />
+          <Property Name="id_loai_sp" Type="char" MaxLength="20" />
+          <Property Name="id_ncc" Type="char" MaxLength="20" Nullable="false" />
+          <Property Name="mota_sp" Type="nvarchar" MaxLength="250" />
+          <Property Name="unit_price" Type="int" />
+          <Property Name="so_luong" Type="int" Nullable="false" />
+          <Property Name="image" Type="varchar" MaxLength="255" />
+          <Property Name="don_vi_tinh" Type="varchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="users">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="char" MaxLength="20" Nullable="false" />
+          <Property Name="full_name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="users_name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="email" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="password" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="phone" Type="varchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_bill_detail_nhap_bills_nhap">
+          <End Role="bills_nhap" Type="Self.bills_nhap" Multiplicity="1" />
+          <End Role="bill_detail_nhap" Type="Self.bill_detail_nhap" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="bills_nhap">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="bill_detail_nhap">
+              <PropertyRef Name="id_bill_nhap" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_bills_ban_khach_hang">
+          <End Role="khach_hang" Type="Self.khach_hang" Multiplicity="0..1" />
+          <End Role="bills_ban" Type="Self.bills_ban" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="khach_hang">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="bills_ban">
+              <PropertyRef Name="id_kh" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_san_pham_loai_sp">
+          <End Role="loai_sp" Type="Self.loai_sp" Multiplicity="0..1" />
+          <End Role="san_pham" Type="Self.san_pham" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="loai_sp">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="san_pham">
+              <PropertyRef Name="id_loai_sp" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="APIModelStoreContainer">
+          <EntitySet Name="bill_detail_ban" EntityType="Self.bill_detail_ban" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="bill_detail_nhap" EntityType="Self.bill_detail_nhap" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="bills_ban" EntityType="Self.bills_ban" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="bills_nhap" EntityType="Self.bills_nhap" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="khach_hang" EntityType="Self.khach_hang" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="loai_sp" EntityType="Self.loai_sp" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="san_pham" EntityType="Self.san_pham" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="users" EntityType="Self.users" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="news" EntityType="Self.news" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [news].[id_new] AS [id_new], 
+    [news].[title] AS [title], 
+    [news].[content] AS [content], 
+    [news].[image] AS [image]
+    FROM [dbo].[news] AS [news]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="nha_cung_cap" EntityType="Self.nha_cung_cap" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [nha_cung_cap].[id] AS [id], 
+    [nha_cung_cap].[ten_ncc] AS [ten_ncc], 
+    [nha_cung_cap].[diachi_ncc] AS [diachi_ncc], 
+    [nha_cung_cap].[email] AS [email], 
+    [nha_cung_cap].[sdt] AS [sdt]
+    FROM [dbo].[nha_cung_cap] AS [nha_cung_cap]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK_bill_detail_nhap_bills_nhap" Association="Self.FK_bill_detail_nhap_bills_nhap">
+            <End Role="bills_nhap" EntitySet="bills_nhap" />
+            <End Role="bill_detail_nhap" EntitySet="bill_detail_nhap" />
+          </AssociationSet>
+          <AssociationSet Name="FK_bills_ban_khach_hang" Association="Self.FK_bills_ban_khach_hang">
+            <End Role="khach_hang" EntitySet="khach_hang" />
+            <End Role="bills_ban" EntitySet="bills_ban" />
+          </AssociationSet>
+          <AssociationSet Name="FK_san_pham_loai_sp" Association="Self.FK_san_pham_loai_sp">
+            <End Role="loai_sp" EntitySet="loai_sp" />
+            <End Role="san_pham" EntitySet="san_pham" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="APIModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="bill_detail_ban">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="String" MaxLength="20" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="id_bill_ban" Type="String" MaxLength="20" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="listsanpham" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="id_kh" Type="String" MaxLength="20" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="tongtien" Type="Int32" />
+        </EntityType>
+        <EntityType Name="bill_detail_nhap">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="String" MaxLength="20" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="id_bill_nhap" Type="String" MaxLength="20" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="id_sp" Type="String" MaxLength="20" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="sl" Type="Int32" Nullable="false" />
+          <Property Name="don_vi" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="created_at" Type="DateTime" Precision="0" />
+          <Property Name="updated_at" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="bills_nhap" Relationship="Self.FK_bill_detail_nhap_bills_nhap" FromRole="bill_detail_nhap" ToRole="bills_nhap" />
+        </EntityType>
+        <EntityType Name="bills_ban">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="String" MaxLength="20" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="id_kh" Type="String" MaxLength="20" FixedLength="true" Unicode="false" />
+          <Property Name="ngay_dat" Type="DateTime" Precision="0" />
+          <Property Name="tong_tien" Type="Double" />
+          <Property Name="trangthai" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ghichu" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="ten_kh" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="khach_hang" Relationship="Self.FK_bills_ban_khach_hang" FromRole="bills_ban" ToRole="khach_hang" />
+        </EntityType>
+        <EntityType Name="bills_nhap">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="String" MaxLength="20" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="id_ncc" Type="String" MaxLength="20" FixedLength="true" Unicode="false" />
+          <Property Name="id_nhanvien" Type="String" MaxLength="20" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="date_order" Type="DateTime" Precision="0" />
+          <Property Name="tong_tien" Type="Double" />
+          <Property Name="thanh_toan" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="note" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="created_at" Type="DateTime" Precision="0" />
+          <Property Name="updated_at" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="bill_detail_nhap" Relationship="Self.FK_bill_detail_nhap_bills_nhap" FromRole="bills_nhap" ToRole="bill_detail_nhap" />
+        </EntityType>
+        <EntityType Name="khach_hang">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="String" MaxLength="20" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="ten_kh" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="email" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="dia_chi" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="sdt" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="note" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="bills_ban" Relationship="Self.FK_bills_ban_khach_hang" FromRole="khach_hang" ToRole="bills_ban" />
+        </EntityType>
+        <EntityType Name="loai_sp">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="String" MaxLength="20" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="tenloai" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="san_pham" Relationship="Self.FK_san_pham_loai_sp" FromRole="loai_sp" ToRole="san_pham" />
+        </EntityType>
+        <EntityType Name="san_pham">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="String" MaxLength="20" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="id_loai_sp" Type="String" MaxLength="20" FixedLength="true" Unicode="false" />
+          <Property Name="id_ncc" Type="String" MaxLength="20" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="mota_sp" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="unit_price" Type="Int32" />
+          <Property Name="so_luong" Type="Int32" Nullable="false" />
+          <Property Name="image" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="don_vi_tinh" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="loai_sp" Relationship="Self.FK_san_pham_loai_sp" FromRole="san_pham" ToRole="loai_sp" />
+        </EntityType>
+        <EntityType Name="sysdiagram">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="user">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="String" MaxLength="20" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="full_name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="users_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="email" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="password" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="phone" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
+        <EntityType Name="news">
+          <Key>
+            <PropertyRef Name="id_new" />
+            <PropertyRef Name="title" />
+            <PropertyRef Name="content" />
+            <PropertyRef Name="image" />
+          </Key>
+          <Property Name="id_new" Type="String" MaxLength="20" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="title" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="content" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="image" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
+        <EntityType Name="nha_cung_cap">
+          <Key>
+            <PropertyRef Name="id" />
+            <PropertyRef Name="ten_ncc" />
+            <PropertyRef Name="diachi_ncc" />
+            <PropertyRef Name="email" />
+            <PropertyRef Name="sdt" />
+          </Key>
+          <Property Name="id" Type="String" MaxLength="20" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="ten_ncc" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="diachi_ncc" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="email" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="sdt" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_bill_detail_nhap_bills_nhap">
+          <End Role="bills_nhap" Type="Self.bills_nhap" Multiplicity="1" />
+          <End Role="bill_detail_nhap" Type="Self.bill_detail_nhap" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="bills_nhap">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="bill_detail_nhap">
+              <PropertyRef Name="id_bill_nhap" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_bills_ban_khach_hang">
+          <End Role="khach_hang" Type="Self.khach_hang" Multiplicity="0..1" />
+          <End Role="bills_ban" Type="Self.bills_ban" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="khach_hang">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="bills_ban">
+              <PropertyRef Name="id_kh" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_san_pham_loai_sp">
+          <End Role="loai_sp" Type="Self.loai_sp" Multiplicity="0..1" />
+          <End Role="san_pham" Type="Self.san_pham" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="loai_sp">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="san_pham">
+              <PropertyRef Name="id_loai_sp" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="APIEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="bill_detail_ban" EntityType="Self.bill_detail_ban" />
+          <EntitySet Name="bill_detail_nhap" EntityType="Self.bill_detail_nhap" />
+          <EntitySet Name="bills_ban" EntityType="Self.bills_ban" />
+          <EntitySet Name="bills_nhap" EntityType="Self.bills_nhap" />
+          <EntitySet Name="khach_hang" EntityType="Self.khach_hang" />
+          <EntitySet Name="loai_sp" EntityType="Self.loai_sp" />
+          <EntitySet Name="san_pham" EntityType="Self.san_pham" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+          <EntitySet Name="users" EntityType="Self.user" />
+          <EntitySet Name="news" EntityType="Self.news" />
+          <EntitySet Name="nha_cung_cap" EntityType="Self.nha_cung_cap" />
+          <AssociationSet Name="FK_bill_detail_nhap_bills_nhap" Association="Self.FK_bill_detail_nhap_bills_nhap">
+            <End Role="bills_nhap" EntitySet="bills_nhap" />
+            <End Role="bill_detail_nhap" EntitySet="bill_detail_nhap" />
+          </AssociationSet>
+          <AssociationSet Name="FK_bills_ban_khach_hang" Association="Self.FK_bills_ban_khach_hang">
+            <End Role="khach_hang" EntitySet="khach_hang" />
+            <End Role="bills_ban" EntitySet="bills_ban" />
+          </AssociationSet>
+          <AssociationSet Name="FK_san_pham_loai_sp" Association="Self.FK_san_pham_loai_sp">
+            <End Role="loai_sp" EntitySet="loai_sp" />
+            <End Role="san_pham" EntitySet="san_pham" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="APIModelStoreContainer" CdmEntityContainer="APIEntities">
+          <EntitySetMapping Name="bill_detail_ban">
+            <EntityTypeMapping TypeName="APIModel.bill_detail_ban">
+              <MappingFragment StoreEntitySet="bill_detail_ban">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="id_bill_ban" ColumnName="id_bill_ban" />
+                <ScalarProperty Name="listsanpham" ColumnName="listsanpham" />
+                <ScalarProperty Name="id_kh" ColumnName="id_kh" />
+                <ScalarProperty Name="tongtien" ColumnName="tongtien" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="bill_detail_nhap">
+            <EntityTypeMapping TypeName="APIModel.bill_detail_nhap">
+              <MappingFragment StoreEntitySet="bill_detail_nhap">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="id_bill_nhap" ColumnName="id_bill_nhap" />
+                <ScalarProperty Name="id_sp" ColumnName="id_sp" />
+                <ScalarProperty Name="sl" ColumnName="sl" />
+                <ScalarProperty Name="don_vi" ColumnName="don_vi" />
+                <ScalarProperty Name="created_at" ColumnName="created_at" />
+                <ScalarProperty Name="updated_at" ColumnName="updated_at" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="bills_ban">
+            <EntityTypeMapping TypeName="APIModel.bills_ban">
+              <MappingFragment StoreEntitySet="bills_ban">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="id_kh" ColumnName="id_kh" />
+                <ScalarProperty Name="ngay_dat" ColumnName="ngay_dat" />
+                <ScalarProperty Name="tong_tien" ColumnName="tong_tien" />
+                <ScalarProperty Name="trangthai" ColumnName="trangthai" />
+                <ScalarProperty Name="ghichu" ColumnName="ghichu" />
+                <ScalarProperty Name="ten_kh" ColumnName="ten_kh" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="bills_nhap">
+            <EntityTypeMapping TypeName="APIModel.bills_nhap">
+              <MappingFragment StoreEntitySet="bills_nhap">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="id_ncc" ColumnName="id_ncc" />
+                <ScalarProperty Name="id_nhanvien" ColumnName="id_nhanvien" />
+                <ScalarProperty Name="date_order" ColumnName="date_order" />
+                <ScalarProperty Name="tong_tien" ColumnName="tong_tien" />
+                <ScalarProperty Name="thanh_toan" ColumnName="thanh_toan" />
+                <ScalarProperty Name="note" ColumnName="note" />
+                <ScalarProperty Name="created_at" ColumnName="created_at" />
+                <ScalarProperty Name="updated_at" ColumnName="updated_at" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="khach_hang">
+            <EntityTypeMapping TypeName="APIModel.khach_hang">
+              <MappingFragment StoreEntitySet="khach_hang">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="ten_kh" ColumnName="ten_kh" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="dia_chi" ColumnName="dia_chi" />
+                <ScalarProperty Name="sdt" ColumnName="sdt" />
+                <ScalarProperty Name="note" ColumnName="note" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="loai_sp">
+            <EntityTypeMapping TypeName="APIModel.loai_sp">
+              <MappingFragment StoreEntitySet="loai_sp">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="tenloai" ColumnName="tenloai" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="san_pham">
+            <EntityTypeMapping TypeName="APIModel.san_pham">
+              <MappingFragment StoreEntitySet="san_pham">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="id_loai_sp" ColumnName="id_loai_sp" />
+                <ScalarProperty Name="id_ncc" ColumnName="id_ncc" />
+                <ScalarProperty Name="mota_sp" ColumnName="mota_sp" />
+                <ScalarProperty Name="unit_price" ColumnName="unit_price" />
+                <ScalarProperty Name="so_luong" ColumnName="so_luong" />
+                <ScalarProperty Name="image" ColumnName="image" />
+                <ScalarProperty Name="don_vi_tinh" ColumnName="don_vi_tinh" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="APIModel.sysdiagram">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="users">
+            <EntityTypeMapping TypeName="APIModel.user">
+              <MappingFragment StoreEntitySet="users">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="full_name" ColumnName="full_name" />
+                <ScalarProperty Name="users_name" ColumnName="users_name" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="phone" ColumnName="phone" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="news">
+            <EntityTypeMapping TypeName="APIModel.news">
+              <MappingFragment StoreEntitySet="news">
+                <ScalarProperty Name="id_new" ColumnName="id_new" />
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="content" ColumnName="content" />
+                <ScalarProperty Name="image" ColumnName="image" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="nha_cung_cap">
+            <EntityTypeMapping TypeName="APIModel.nha_cung_cap">
+              <MappingFragment StoreEntitySet="nha_cung_cap">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="ten_ncc" ColumnName="ten_ncc" />
+                <ScalarProperty Name="diachi_ncc" ColumnName="diachi_ncc" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="sdt" ColumnName="sdt" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
