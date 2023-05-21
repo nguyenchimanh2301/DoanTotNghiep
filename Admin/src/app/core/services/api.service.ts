@@ -2,19 +2,21 @@ import { environment } from './../../../environments/environment';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import {map } from 'rxjs/operators';
-
+import { Observable } from 'rxjs';
+import {map } from 'rxjs/operators'
 @Injectable({
     providedIn: 'root',
 })
+
+
 export class ApiService {
     public host = environment.BASE_API;
     constructor(private _http: HttpClient, public router: Router) { }
 
     public post(url: string, obj: any) {
-        const body = JSON.stringify(obj);
+        const body = FormData;
         let cloneHeader: any = {};
-        cloneHeader['Content-Type'] = 'application/json';
+        cloneHeader['Content-Type'] = 'multipart/form-data';
         const headerOptions = new HttpHeaders(cloneHeader);
         return this._http
             .post<any>(this.host + url, body, { headers: headerOptions })
@@ -24,7 +26,7 @@ export class ApiService {
                 })
             );
     }
-
+   
     public get(url: string) {
         let cloneHeader: any = {};
         cloneHeader['Content-Type'] = 'application/json';
@@ -54,4 +56,19 @@ export class ApiService {
         formData.append('folder', folder);
         return this._http.post(this.host + url, formData, { reportProgress: true, observe: 'events' })
     }
+
+    uploadFiles(file: File): Observable<any> {
+        const url = 'https://localhost:44310/api/FileUpload'; // Thay thế bằng URL thực tế của API endpoint
+        console.log(file);
+        const formData = new FormData();
+        formData.append('file', file); // Thay 'file' bằng tên trường tương ứng trong API
+        const headers = new HttpHeaders();
+        // Đảm bảo Content-Type phù hợp
+        console.log(formData.getAll('file'))
+
+        headers.append('Content-Type', 'multipart/form-data');
+        console.log(formData);
+        return this._http.post(url, formData, { headers });
+        
+      }
 }

@@ -60,18 +60,13 @@
   background-color: #FFBABA;
 }
 
-/* Just for CodePen styling - don't include if you copy paste */
+
 html {
   font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; 
 
 }
 
-  /* ======= Buttons ======== */
-  
-  /* Block */
 
-  
-  /* Modifier */
 #group-form{
   display: flex;
   align-items: center;
@@ -94,3 +89,4 @@ html {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
 }
+

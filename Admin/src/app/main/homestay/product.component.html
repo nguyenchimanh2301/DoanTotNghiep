@@ -20,7 +20,6 @@
      XÓA THÀNH CÔNG
     </div>
 
-
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
       <a class="navbar-brand"><button type="button" (click)="Show(0)" class="btn btn-success"><i class="fa fa-plus">Thêm</i></button></a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -120,8 +119,14 @@
                   </div> 
                   <div class="form-group">
                     <label for="">Ảnh homestay</label>
-                    <input type="file" 
-                    class="form-control" name="" id="files" aria-describedby="helpId" placeholder=""   >
+                    <!-- <input type="file" 
+                    class="form-control" name="" id="files" aria-describedby="helpId" placeholder=""   > -->
+                    <div>
+                        <!-- <input type="file" (change)="onFileSelected($event)">
+                    
+                    <button (click)="uploadFile()">Upload</button> -->
+                    <input type="file" (change)="onFileSelected($event)">
+                    </div>
                   </div> 
                  
                 
@@ -140,7 +145,6 @@
         </div>
       </form>
     </div>
-
 
 
     <div class="modal-contain" [hidden]="active">
@@ -259,7 +263,7 @@
           <!-- <td>{{ item.ngaySanxuat|date:'dd/MM/yy'}}</td>
           <td>{{ item.hanSudung|date:'dd/MM/yy'}}</td> -->
           <td id="icon_admin">
-            <button (click)="DeleteProduct(item.id)" type="button" class="btn btn-danger"><i class="fa fa-trash" aria-hidden="true" ></i></button>
+            <button (click)="DeleteProduct(item)" type="button" class="btn btn-danger"><i class="fa fa-trash" aria-hidden="true" ></i></button>
             <button (click)="ShowModal(item.id)" type="button" class="btn btn-warning"><i class="fa fa-edit" aria-hidden="true"></i></button>
           </td>
         </tr>
@@ -293,3 +297,6 @@
 </button> -->
 
 <!-- Modal -->
+
+
+

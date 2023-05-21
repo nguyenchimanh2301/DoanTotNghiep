@@ -1,16 +1,18 @@
-import { UploadService } from './../../core/services/image.service';
+
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ApiService } from '../../core/services/api.service';
 import { Component, ElementRef, OnInit ,ViewChild } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
-import { UploadService } from 'src/app/core/services/image.service';
-UploadService
+import { UploadService } from './../../core/services/image.service';
+import { Observable } from 'rxjs';
+
 @Component({
   selector: 'app-product',
   templateUrl: './product.component.html',
-  styleUrls: ['./product.component.css']
+  styleUrls: ['./product.component.css'],
+
 })
 export class ProductComponent implements OnInit {
   selectedFile: File | null = null;
@@ -54,7 +56,7 @@ export class ProductComponent implements OnInit {
 
 
 
-
+ 
   get tenPhong() {
     return this.formSP.get('tenPhong')!;
   }
@@ -71,23 +73,77 @@ export class ProductComponent implements OnInit {
   get donvi() {
     return this.formSP.get('txt_donvi')!;
   }
-  
-  onFileSelect(event: any) {
-    if (event.target.files.length > 0) {
-      const file = event.target.files[0];
-      const formData = new FormData();
-      formData.append('file', file);
-  
-      this.api.post('https://localhost:44310/uploadfile', formData).subscribe(
-        (response) => {
-          console.log('Upload thành công!', response);
-        },
-        (error) => {
-          console.error('Upload thất bại:', error);
-        }
-      );
-    }
+
+  onFileSelected(event: any) {
+    const file: File = event.target.files[0];
+    console.log(file);
+    this.apisv.uploadFiles(file).subscribe(
+      response => {
+        // Xử lý kết quả thành công
+        console.log('Upload thành công:', response);
+      },
+      error => {
+        // Xử lý lỗi nếu có
+        console.log('Lỗi upload:', error);
+      }
+    );
   }
+  // onFileSelected(event: any): void {
+  //   const files: File = event.target.files[0];
+  //   console.log(files);
+  //   this.selectedFile = files;
+  // }
+
+  // uploadFile(): void {
+  //   if (this.selectedFile) {
+  //     if (this.selectedFile && this.selectedFile.name && this.selectedFile.size && this.selectedFile.type) {
+  //       // Thực hiện upload với đối tượng file hợp lệ
+  //       console.log('Đối tượng file hợp lệ:', this.selectedFile);
+  //     } else {
+  //       console.log('Đối tượng file không hợp lệ');
+  //     }
+  //     const formData = new FormData();
+  //     formData.append('file', this.selectedFile);
+  //     this.api.post('https://localhost:44310/api/FileUpload', formData)
+  //       .subscribe(
+  //         response => {
+  //           console.log('File uploaded successfully!');
+  //         },
+  //         error => {
+  //           console.error('Failed to upload file:', error);
+  //         }
+  //       );
+  //   }
+  // }
+
+
+
+
+
+
+  // onFileSelect(event: any) {
+  //   this.selectedFile = event.target.files[0];
+  //   console.log(this.selectedFile);
+  // }
+
+  
+  
+  // onFileSelect(event: any) {
+  //   if (event.target.files.length > 0) {
+  //     const file = event.target.files[0];
+  //     const formData = new FormData();
+  //     formData.append('file', file);
+  
+  //     this.api.post('https://localhost:44310/uploadfile', formData).subscribe(
+  //       (response) => {
+  //         console.log('Upload thành công!', response);
+  //       },
+  //       (error) => {
+  //         console.error('Upload thất bại:', error);
+  //       }
+  //     );
+  //   }
+  // }
 
 
   add_Product(item:any){
@@ -133,13 +189,13 @@ export class ProductComponent implements OnInit {
       
     });
   }
-  public upload(event: any) {
-    if (event.target.files && event.target.files.length > 0) {
-      this.file = event.target.files[0];
-      this.apisv.uploadFileSingle('/api/upload/upload', 'sanpham', this.file).subscribe((res: any) => {
-      });
-    }
-  }
+  // public upload(event: any) {
+  //   if (event.target.files && event.target.files.length > 0) {
+  //     this.file = event.target.files[0];
+  //     this.apisv.uploadFileSingle('/api/upload/upload', 'sanpham', this.file).subscribe((res: any) => {
+  //     });
+  //   }
+  // }
   update_Product(item:any){
     this.image = document.getElementById('files');
     let obj ={
@@ -166,8 +222,8 @@ export class ProductComponent implements OnInit {
      setTimeout(()=>{this.add_succes=true;},2000);})
   }
   DeleteProduct(item:any){
-    if(confirm('Are you sure you want to delete')){
-      this.api.delete(this.host+'/Delete_Sp?id='+item).subscribe(data => {
+    if(confirm('bạn có muốn xóa homestay'+item.ten)){
+      this.api.delete(this.host+'/Delete_homestay?id='+item.id).subscribe(data => {
         this.delete_succes=false;
         setTimeout(() => {this.delete_succes=true},2000);
         this.get();
@@ -210,7 +266,7 @@ export class ProductComponent implements OnInit {
   search(){
     let name = (<HTMLInputElement>document.getElementById('searchs')).value;
     console.log(name);
-    this.api.get(this.host+'/Search?name='+name).subscribe(data=>{
+    this.api.get(this.host+'/Search_LoaiHomstay?name='+name).subscribe(data=>{
       this.product = data;
     });
   }

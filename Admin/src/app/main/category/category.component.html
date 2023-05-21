@@ -1,7 +1,7 @@
 <div class="row-toolbar">
   <div class="success-msg" [hidden]="add_succes">
     <i class="fa fa-check"></i>
-   THÊM THÀNH CÔNG
+   {{toast}} THÀNH CÔNG
   </div>
   
    <!--<div class="warning-msg" [hidden]="add_succes">
@@ -14,7 +14,7 @@
    XÓA THÀNH CÔNG
   </div>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-      <a class="navbar-brand"><button (click)="Show(0)">THÊM</button></a>
+      <a class="navbar-brand"><button type="button" (click)="Show(0)" class="btn btn-success"><i class="fa fa-plus">Thêm</i></button></a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -53,7 +53,7 @@
         <div class="modal-dialog" role="document">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title">THÊM DANH MỤC</h5>
+              <h5 class="modal-title">{{title}}</h5>
               <button
                 type="button"
                 class="close"
@@ -67,6 +67,8 @@
   
             <div class="modal-body">
               <div class="form-group">
+                <input hidden="true" type="text" class="form-control" name="" id="" aria-describedby="helpId" placeholder="" formControlName="id"    ngModel>
+
                 <label for="">Tên Danh Mục </label> <span>*</span>
                 <span *ngIf="tenlsp.invalid && (tenlsp.dirty || tenlsp.touched)">
                   <span *ngIf="tenlsp.errors?.['required']"
@@ -119,7 +121,7 @@
       <thead>
         <tr>
           <th style="width: 100px">STT</th>
-          <th>Tên loại sản phẩm</th>
+          <th>Tên loại Homesta</th>
           <th>Chức năng</th>
 
         </tr>

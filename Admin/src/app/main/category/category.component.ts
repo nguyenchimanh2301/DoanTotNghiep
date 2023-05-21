@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators, FormBuilder } from '@angular/forms';
+import { ApiService } from 'src/app/core/services/api.service';
 import { environment } from 'src/environments/environment';
 
 @Component({
@@ -21,9 +22,12 @@ export class CategoryComponent implements OnInit {
   active=true;
   image:any;
   Mode = '0'
+  toast:String = "THÊM"
+  title:string = "THÊM LOẠI HOME STAY";
+  iscreate = false;
   add_succes = true;
   delete_succes = true;
-  constructor(private api:HttpClient,public fb:FormBuilder) { }
+  constructor(private api:HttpClient,public fb:FormBuilder,private apisv:ApiService) { }
 
   ngOnInit(): void {
     this.get();
@@ -37,32 +41,39 @@ export class CategoryComponent implements OnInit {
   
  
   add_Product(item:any){
-    this.image = document.getElementById('files');
-    var obj ={
-    name: item.txt_tensp,
-    idLoaiSp: "1",
-    idNcc: "1",
-    motaSp: "abcd",
-    unitPrice: item.txt_giatien,
-    soLuong: item.txt_soluong,
-    image :this.image.files[0].name,
-    donViTinh: item.txt_donvi,
-    }
-    console.log(obj);
-    this.api.post(this.host+'/add_Sp',obj).subscribe(data => {
-      if(data){
-        alert("success");
-        this.get();
+    let obj ={
+      id : item.id,
+      tenLoaiPhong: item.txt_tenlsp,
       }
-    })
+    if(this.iscreate){
+      console.log(obj);
+      this.api.post(this.host+'/add_loaihomestay',obj).subscribe(data => {
+        if(data){
+          this.get();
+          this.add_succes=false
+          setTimeout(()=>{this.add_succes=true;},2000);
+        }
+      })
+    }
+    else{
+      this.api.put(this.host+'/update_loaihomestay',obj).subscribe(data => {
+        this.get();
+       this.active = true;
+       this.toast = "SỬA";
+       this.add_succes=false
+       setTimeout(()=>{this.add_succes=true;},2000);})
+    }
+   
+   
   }
   ShowModal(item:any){
+  this.title = "SỬA LOẠI HOME STAY"
     this.active = false;
-    this.api.get(this.host+'/get_by_id?id='+item).subscribe(data=>{
+    this.api.get(this.host+'/get_loaihomestay_id?id='+item).subscribe(data=>{
       this.getlsp_id = data;
       this.formLSP = this.fb.group({
-        txt_tensp:   [this.getlsp_id.name,Validators.required],
-        id:         [this.getlsp_id.id,Validators.required],
+        txt_tenlsp:   [this.getlsp_id.tenloai,Validators.required],
+        id:         [  this.getlsp_id.id,Validators.required],
       });
       
     });
@@ -70,28 +81,15 @@ export class CategoryComponent implements OnInit {
   update_Product(item:any){
     this.image = document.getElementById('files');
     let obj ={
-    Id : item.idsp,
-    name: item.txt_tensp,
-    idLoaiSp: item.lsp,
-    idNcc: "2",
-    motaSp: "abcd",
-    unitPrice: item.txt_giatien,
-    soLuong: item.txt_soluong,
-    image :this.image.files[0].name,
-    donViTinh: item.txt_donvi,
-    ngaySanxuat:item.ngaySanxuat,
-    hanSudung:item.hanSudung,
+    id : item.idsp,
+    tenLoaiPhong: item.lsp,
     }
     console.log(obj);
-    this.api.post(this.host+'/add_Sp',obj).subscribe(data => {
-      this.get();
-     this.active = true;
-     this.add_succes=false
-     setTimeout(()=>{this.add_succes=true;},2000);})
+    
   }
   DeleteLSP(item:any){
     if(confirm('Are you sure you want to delete')){
-      this.api.delete(this.host+'/Delete_Sp?id='+item).subscribe(data => {
+      this.api.delete(this.host+'/Delete_loaihomestay?id='+item).subscribe(data => {
         this.delete_succes=false;
         setTimeout(() => {this.delete_succes=true},2000);
         this.get();
@@ -114,9 +112,11 @@ export class CategoryComponent implements OnInit {
       if(value==this.Mode){
       this.active=false;
       }
+  this.iscreate = true;
+
   }
   get():void{
-    this.api.get(this.host+'/get_all_category').subscribe(data=>{
+    this.api.get(this.host+'/get_all_loaihomestay').subscribe(data=>{
       this.categories = data;
     });
   }
