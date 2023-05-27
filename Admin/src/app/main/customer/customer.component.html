@@ -61,6 +61,11 @@
         <tr>
           <th style="width: 50px">STT</th>
           <th>Tên Khách Hàng</th>
+          <th>Địa chỉ </th>
+          <th>Email</th>
+          <th>Số Điện Thoại</th>
+          <th>Chức năng</th>
+
        
         </tr>
       </thead>
@@ -78,6 +83,10 @@
         >
           <td>{{ i + 1 }}</td>
           <td>{{ item.tenKh }}</td>
+          <td>{{ item.diaChi }}</td>
+          <td>{{ item.email }}</td>
+          <td>{{ item.sdt }}</td>
+
         
           <td id="icon_admin">
             <button  type="button" class="btn btn-danger"><i class="fa fa-trash" aria-hidden="true" ></i></button>

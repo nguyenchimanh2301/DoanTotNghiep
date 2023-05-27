@@ -5,7 +5,7 @@ namespace APIDoanV.Model;
 
 public partial class KhachHang
 {
-    public string Id { get; set; } = null!;
+    public int Id { get; set; }
 
     public string TenKh { get; set; } = null!;
 
@@ -16,4 +16,6 @@ public partial class KhachHang
     public string Sdt { get; set; } = null!;
 
     public string? Note { get; set; }
+
+    public virtual ICollection<DatPhong> DatPhongs { get; } = new List<DatPhong>();
 }

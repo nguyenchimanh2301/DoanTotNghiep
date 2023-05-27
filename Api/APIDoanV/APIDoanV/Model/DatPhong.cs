@@ -7,9 +7,7 @@ public partial class DatPhong
 {
     public int Id { get; set; }
 
-    public int Idphong { get; set; }
-
-    public string? Idkh { get; set; }
+    public int Idkh { get; set; }
 
     public string? Tenkh { get; set; }
 
@@ -21,7 +19,5 @@ public partial class DatPhong
 
     public bool? Thanhtoan { get; set; }
 
-    public virtual ICollection<ChitietDatPhong> ChitietDatPhongs { get; } = new List<ChitietDatPhong>();
-
-    public virtual Phong IdphongNavigation { get; set; } = null!;
+    public virtual KhachHang IdkhNavigation { get; set; } = null!;
 }

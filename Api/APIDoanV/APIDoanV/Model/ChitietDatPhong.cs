@@ -5,7 +5,7 @@ namespace APIDoanV.Model;
 
 public partial class ChitietDatPhong
 {
-    public int Id { get; set; }
+    public int Idp { get; set; }
 
     public int Iddondat { get; set; }
 
@@ -15,5 +15,5 @@ public partial class ChitietDatPhong
 
     public double? Thanhtien { get; set; }
 
-    public virtual DatPhong IddondatNavigation { get; set; } = null!;
+    public virtual Phong IdpNavigation { get; set; } = null!;
 }

@@ -1,40 +1,4 @@
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 <div class="row-toolbar">
   
     <!-- <div class="info-msg" [hidden]="add_succes">
@@ -98,9 +62,11 @@
         <tr>
           <th style="width: 50px">STT</th>
           <th>Mã Đơn Hàng</th>
-          <th>Mã Khách Hàng</th>
-          <th>Trạng Thái</th>
+          <th>Tên Khách Hàng</th>
           <th>Ngày đặt</th>
+          <th>Ngày Trả</th>
+          <th>Trạng Thái</th>
+
         </tr>
       </thead>
       <tbody>
@@ -118,8 +84,10 @@
           <td>{{ i + 1 }}</td>
           <td>{{ item.maDonHang }}</td>
           <td>{{ item.tenKh}}</td>
-          <td>{{ item.trangthai}}</td>
           <td>{{ item.ngaydat|date:'dd/MM/yy'}}</td>
+          <td>{{ item.ngaytra|date:'dd/MM/yy'}}</td>
+          <td>{{ item.trangthai}}</td>
+
           <td id="icon_admin">
             <button  type="button" class="btn btn-danger"><i class="fa fa-trash" aria-hidden="true" ></i></button>
             <button  type="button" class="btn btn-success" (click)="show(item)"><i class="fa fa-eye" aria-hidden="true"></i></button>

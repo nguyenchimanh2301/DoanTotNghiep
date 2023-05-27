@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 using System.Collections.Generic;
 using APIDoanV.Model;
@@ -39,37 +39,38 @@ namespace APIDoanV.Controllers
 
         [Route("checkout")]
         [HttpPost]
-        public IActionResult Createbill([FromBody] checkout model)
+        public IActionResult CreateBill([FromBody] CheckoutModel model)
         {
-
-            model.kh.Id = Guid.NewGuid().ToString();
             dbc.KhachHangs.Add(model.kh);
             dbc.SaveChanges();
-            string MaKhachHang = model.kh.Id;
+
+            int MaKhachHang = model.kh.Id;
             DatPhong dh = new DatPhong();
             dh.Idkh = MaKhachHang;
             dh.Thanhtoan = true;
             dh.Ngaydat = DateTime.Now;
-            dh.Idphong = 7;
             dbc.DatPhongs.Add(dh);
             dbc.SaveChanges();
+
             int MaDonHang = dh.Id;
 
-         
-                foreach (var item in model.donhang)
-                {
-                    item.Iddondat = MaDonHang;
-                    dbc.ChitietDatPhongs.Add(item);
-                }
-                dbc.SaveChanges();
-            
+            foreach (var item in model.donhang)
+            {
+                item.Iddondat = MaDonHang;
+                // Xóa navigation property trước khi thêm vào cơ sở dữ liệu
+                item.IdpNavigation = null;
+                dbc.ChitietDatPhongs.Add(item);
+            }
+            dbc.SaveChanges();
+
             return Ok(new { data = "OK" });
         }
+
+        public class CheckoutModel
+        {
+            public KhachHang kh { get; set; }
+            public List<ChitietDatPhong> donhang { get; set; }
+        }
+        /*Scaffold-DbContext "Server=LAPTOP-LLHPT87U\SQLEXPRESS;Database=API;Trusted_Connection=True;Encrypt=False" Microsoft.EntityFrameworkCore.SqlServer -OutputDir Models -force*/
     }
-    public class checkout
-    {
-        public KhachHang kh { get; set; }
-        public List<ChitietDatPhong> donhang { get; set; }
-    }
-    /*Scaffold-DbContext "Server=LAPTOP-LLHPT87U\SQLEXPRESS;Database=API;Trusted_Connection=True;Encrypt=False" Microsoft.EntityFrameworkCore.SqlServer -OutputDir Models -force*/
 }

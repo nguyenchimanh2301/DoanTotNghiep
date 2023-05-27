@@ -34,7 +34,7 @@ export class OrderComponent implements OnInit {
     this.page = event;
   }
   get(){
-    this.api.get(this.host+'/get_all_hoadon').subscribe(data =>{
+    this.api.get(this.host+'/get_all_donhang').subscribe(data =>{
       this.order = data;
       console.log(data);
     })

@@ -15,9 +15,10 @@ import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { CustomerComponent } from './customer/customer.component';
 import { SellComponent } from './sell/sell.component';
 import { DetailbillComponent } from './detailbill/detailbill.component';
+import { AccountComponent } from './account/account.component';
 @NgModule({
     declarations:
-     [MainComponent, IndexComponent, ProductComponent, CategoryComponent, OrderComponent, CustomerComponent, SellComponent, DetailbillComponent],
+     [MainComponent, IndexComponent, ProductComponent, CategoryComponent, OrderComponent, CustomerComponent, SellComponent, DetailbillComponent, AccountComponent],
     imports: [
         CommonModule,
         SharedModule,

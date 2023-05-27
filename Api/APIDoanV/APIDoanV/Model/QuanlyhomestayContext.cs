@@ -127,31 +127,32 @@ public partial class QuanlyhomestayContext : DbContext
 
         modelBuilder.Entity<ChitietDatPhong>(entity =>
         {
+            entity.HasKey(e => new { e.Idp, e.Iddondat });
+
             entity.ToTable("ChitietDatPhong");
 
-            entity.Property(e => e.Id).HasColumnName("id");
-            entity.Property(e => e.Dongia).HasColumnName("dongia");
+            entity.Property(e => e.Idp).HasColumnName("idp");
             entity.Property(e => e.Iddondat).HasColumnName("iddondat");
+            entity.Property(e => e.Dongia).HasColumnName("dongia");
             entity.Property(e => e.Thanhtien).HasColumnName("thanhtien");
             entity.Property(e => e.Tongthoigiandat).HasColumnName("tongthoigiandat");
 
-            entity.HasOne(d => d.IddondatNavigation).WithMany(p => p.ChitietDatPhongs)
-                .HasForeignKey(d => d.Iddondat)
+            entity.HasOne(d => d.IdpNavigation).WithMany(p => p.ChitietDatPhongs)
+                .HasForeignKey(d => d.Idp)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_ChitietDatPhong_DatPhong");
+                .HasConstraintName("FK_ChitietDatPhong_Phong");
         });
 
         modelBuilder.Entity<DatPhong>(entity =>
         {
+            entity.HasKey(e => new { e.Id, e.Idkh });
+
             entity.ToTable("DatPhong");
 
-            entity.Property(e => e.Id).HasColumnName("id");
-            entity.Property(e => e.Idkh)
-                .HasMaxLength(100)
-                .IsUnicode(false)
-                .IsFixedLength()
-                .HasColumnName("idkh");
-            entity.Property(e => e.Idphong).HasColumnName("idphong");
+            entity.Property(e => e.Id)
+                .ValueGeneratedOnAdd()
+                .HasColumnName("id");
+            entity.Property(e => e.Idkh).HasColumnName("idkh");
             entity.Property(e => e.Ngaydat).HasColumnType("datetime");
             entity.Property(e => e.Ngaytra).HasColumnType("datetime");
             entity.Property(e => e.Tenkh)
@@ -161,10 +162,10 @@ public partial class QuanlyhomestayContext : DbContext
                 .HasMaxLength(10)
                 .IsFixedLength();
 
-            entity.HasOne(d => d.IdphongNavigation).WithMany(p => p.DatPhongs)
-                .HasForeignKey(d => d.Idphong)
+            entity.HasOne(d => d.IdkhNavigation).WithMany(p => p.DatPhongs)
+                .HasForeignKey(d => d.Idkh)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_DatPhong_Phong");
+                .HasConstraintName("FK_DatPhong_khach_hang");
         });
 
         modelBuilder.Entity<DonViTinh>(entity =>
@@ -258,11 +259,7 @@ public partial class QuanlyhomestayContext : DbContext
         {
             entity.ToTable("khach_hang");
 
-            entity.Property(e => e.Id)
-                .HasMaxLength(100)
-                .IsUnicode(false)
-                .IsFixedLength()
-                .HasColumnName("id");
+            entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.DiaChi)
                 .HasMaxLength(255)
                 .IsUnicode(false)
