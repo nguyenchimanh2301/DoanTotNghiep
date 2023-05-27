@@ -11,11 +11,9 @@ namespace APIDoanV.Controllers
     [ApiController]
     public class SellController : Controller
     {
-        private ApiContext db = new ApiContext();
+       /* private ApiContext db = new ApiContext();
         [Route("create-hoadonban")]
         [HttpPost]
-
-
 
         public IActionResult CreateItem([FromBody] Hoadonbancs model)
         {
@@ -41,8 +39,8 @@ namespace APIDoanV.Controllers
                 {
                     item.IdBillBan = MaHoaDonBan;
                     db.BillDetailBans.Add(item);
-                    /*var obj = db.ChiTietKhos.SingleOrDefault(x => x.MaSanPham == item.MaSanPham);
-                    obj.SoLuong = obj.SoLuong - item.SoLuong;*/
+                    *//*var obj = db.ChiTietKhos.SingleOrDefault(x => x.MaSanPham == item.MaSanPham);
+                    obj.SoLuong = obj.SoLuong - item.SoLuong;*//*
                 }
                 db.SaveChanges();
             }
@@ -69,7 +67,7 @@ namespace APIDoanV.Controllers
                           where t.IdBillBan == n.IdBillBan 
                           select new {n.IdBillBan,n.Id, s.Name,n.Soluong,n.Giaban }).Where(x=>x.IdBillBan == id).ToList();
             return Json(result);
-        }
+        }*/
     }
  
 }

@@ -10,8 +10,8 @@ namespace APIDoanV.Controllers
 
     public class SanPhamController : Controller
     {
-       
-        ApiContext db = new ApiContext();
+
+        /*ApiContext db = new ApiContext();
         [Route("getall")]
         [HttpGet]
         public ActionResult Get_all_Product()
@@ -274,5 +274,6 @@ namespace APIDoanV.Controllers
                 throw e;
             }
         }
+    }*/
     }
-    }
+}

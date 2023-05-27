@@ -54,7 +54,7 @@ namespace APIDoanV.Controllers
                 throw e;
             }
         }
-        [Route("delete_Account")]
+       /* [Route("delete_Account")]
         [HttpDelete]
         public void deleteCategory(int maacc)
         {
@@ -68,6 +68,6 @@ namespace APIDoanV.Controllers
             {
                 throw e;
             }
-        }
+        }*/
     }
 }

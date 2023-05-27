@@ -3,17 +3,11 @@ using System.Collections.Generic;
 
 namespace APIDoanV.Models;
 
-public partial class NhaCungCap
+public partial class LoaiPhong
 {
     public int Id { get; set; }
 
-    public string TenNcc { get; set; } = null!;
-
-    public string? DienThoai { get; set; }
-
-    public string? DiaChi { get; set; }
-
-    public string? Email { get; set; }
+    public string TenLoaiPhong { get; set; } = null!;
 
     public DateTime? NgayTao { get; set; }
 
@@ -23,5 +17,5 @@ public partial class NhaCungCap
 
     public string? NguoiCapNhat { get; set; }
 
-    public virtual ICollection<HoaDonNhap> HoaDonNhaps { get; } = new List<HoaDonNhap>();
+    public virtual ICollection<Phong> Phongs { get; } = new List<Phong>();
 }

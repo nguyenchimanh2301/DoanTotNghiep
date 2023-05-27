@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace APIDoanV.Model;
+namespace APIDoanV.Models;
 
 public partial class Phong
 {

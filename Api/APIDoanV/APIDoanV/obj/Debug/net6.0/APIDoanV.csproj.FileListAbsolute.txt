@@ -274,3 +274,6 @@ C:\Users\ASUS\Desktop\APIDoanV\APIDoanV\obj\Debug\net6.0\refint\APIDoanV.dll
 C:\Users\ASUS\Desktop\APIDoanV\APIDoanV\obj\Debug\net6.0\APIDoanV.pdb
 C:\Users\ASUS\Desktop\APIDoanV\APIDoanV\obj\Debug\net6.0\APIDoanV.genruntimeconfig.cache
 C:\Users\ASUS\Desktop\APIDoanV\APIDoanV\obj\Debug\net6.0\ref\APIDoanV.dll
+C:\Users\ASUS\Desktop\APIDoanV\APIDoanV\bin\Debug\net6.0\System.Net.Http.Formatting.dll
+C:\Users\ASUS\Desktop\APIDoanV\APIDoanV\bin\Debug\net6.0\Newtonsoft.Json.dll
+C:\Users\ASUS\Desktop\APIDoanV\APIDoanV\bin\Debug\net6.0\Newtonsoft.Json.Bson.dll

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace APIDoanV.Models;
+namespace APIDoanV.Model;
 
 public partial class Account
 {

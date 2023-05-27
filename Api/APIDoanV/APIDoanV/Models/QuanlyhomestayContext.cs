@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 
-namespace APIDoanV.Model;
+namespace APIDoanV.Models;
 
 public partial class QuanlyhomestayContext : DbContext
 {

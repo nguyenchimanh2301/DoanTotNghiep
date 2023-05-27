@@ -1,4 +1,4 @@
-﻿
+
 using APIDoanV.helper;
 using APIDoanV.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -36,7 +36,8 @@ namespace API
                 options.AddPolicy("AllowAll", builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
             });
             services.AddControllers();
-            services.AddSwaggerGen(c =>
+     
+      services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "API", Version = "v1" });
             });

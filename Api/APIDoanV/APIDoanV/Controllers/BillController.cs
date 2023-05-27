@@ -5,59 +5,44 @@ namespace APIDoanV.Controllers
     [ApiController]
     public class BillController : Controller
     {
-        ApiContext db = new ApiContext();
+        QuanlyhomestayContext db = new QuanlyhomestayContext();
         [Route("get_all_donhang")]
         [HttpGet]
         public IActionResult Getall()
         {
-            var bill = db.Donhangs.Select(x => new
-            {
-                MaDonHang = x.MaDonHang,
-                MaKhachHang = x.MaKhachHang,
-                Trangthai = x.Trangthai,
-                Ngaydat = x.Ngaydat
-            }).ToList();
+            var bill = (from t in  db.DatPhongs join
+                       p in db.Phongs on t.Idphong equals p.Id  join
+                       k in db.KhachHangs on t.Idkh equals k.Id
+                       select new
+                       {
+                           t.Id,
+                           p.TenPhong,
+                           k.TenKh,
+                           t.Ngaydat,
+                           t.Ngaytra,
+                           t.Thanhtien,
+                           t.Thanhtoan
+                       }).ToList();
+
             return Json(bill);
         }
-        [Route("get_all_hoadon")]
+        [Route("get_all_ctdonhang")]
         [HttpGet]
-        public IActionResult Getall_hd()
+        public IActionResult Getall_ctdh()
         {
-          /*  var bill = db.BillsBans.Select(x => new
-            {
-                Id = x.Id,
-                IdKh = x.IdKh,
-                TenKh = x.TenKh,
-                Trangthai = x.Trangthai,
-                Ghichu = x.Ghichu,
-                NgayBan = x.NgayBan,
-                TongTien = x.TongTien,
-            }).ToList();*/
-            var result = (from t in db.KhachHangs
-                          join n in db.Donhangs on t.Id equals n.MaKhachHang 
-                          join s in db.ChiTietDonHangs on n.MaDonHang equals s.MaDonHang
-                          where t.Id == n.MaKhachHang && n.MaDonHang==s.MaDonHang
-                          select new { t.TenKh, n.MaDonHang,t.DiaChi,n.Ngaydat })
-                          .ToList();
-            return Json(result);
+            var bill = db.ChitietDatPhongs.ToList();
+
+            return Json(bill);
         }
         [Route("get_chitiet_hoadon")]
         [HttpGet]
-        public IActionResult Getall_cthd(int madonhang)
+        public IActionResult Getall_cthd(int madon)
         {
-            var result = (from t in db.ChiTietDonHangs
-                          join n in db.SanPhams on t.MaSanPham equals n.Id
-                          where t.MaSanPham == n.Id
-                          select new { t.SoLuong,t.GiaMua,t.MaDonHang,n.Name})
-                          .Where(n => n.MaDonHang == madonhang).ToList();
-           /* var result = db.ChiTietDonHangs.Select(x => new
-            {
-                MaChiTietDonHang = x.MaChiTietDonHang,
-                MaSanPham = x.MaSanPham,
-                GiaMua = x.GiaMua,
-                SoLuong = x.SoLuong,
-                MaDonHang = x.MaDonHang
-            }).Where(x => x.MaDonHang == madonhang).ToList();*/
+            var result = (from t in db.DatPhongs join p in db.Phongs on t.Idphong equals p.Id
+                          join n in db.ChitietDatPhongs.Where(x=>x.Iddondat==madon) on t.Id equals n.Iddondat
+                          select new { t.Id,p.TenPhong,n.Tongthoigiandat,p.Dongia,n.Thanhtien})
+                        .ToList();
+  
 
             return Json(result);
         }

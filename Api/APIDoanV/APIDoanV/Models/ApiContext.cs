@@ -69,9 +69,7 @@ public partial class ApiContext : DbContext
                 .HasMaxLength(100)
                 .IsUnicode(false);
 
-            entity.HasOne(d => d.MaNguoiDungNavigation).WithMany(p => p.Accounts)
-                .HasForeignKey(d => d.MaNguoiDung)
-                .HasConstraintName("FK_account_users");
+    
         });
 
         modelBuilder.Entity<BillDetailBan>(entity =>
@@ -294,13 +292,6 @@ public partial class ApiContext : DbContext
 
         modelBuilder.Entity<NhaCungCap>(entity =>
         {
-            entity
-                .HasNoKey()
-                .ToTable("nha_cung_cap");
-
-            entity.Property(e => e.DiachiNcc)
-                .HasMaxLength(200)
-                .HasColumnName("diachi_ncc");
             entity.Property(e => e.Email)
                 .HasMaxLength(255)
                 .IsUnicode(false)
@@ -309,8 +300,7 @@ public partial class ApiContext : DbContext
                 .HasMaxLength(40)
                 .IsUnicode(false)
                 .IsFixedLength()
-                .HasColumnName("id");
-            entity.Property(e => e.Sdt)
+         
                 .HasMaxLength(15)
                 .IsUnicode(false)
                 .HasColumnName("sdt");
