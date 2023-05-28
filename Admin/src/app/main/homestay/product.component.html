@@ -61,98 +61,14 @@
     </nav>
 
  
-    <div class="modal-contain" [hidden]="actived">
-      <form [formGroup]="formSP" (submit)="update_Product(formSP.value)">
-        <div class="modal-lg" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title">THÊM HOMESTAY</h5>
-              <button
-                type="button"
-                class="close"
-                data-dismiss="modal"
-                aria-label="Close"
-                (click)="close()"
-              >
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-  
-            <div class="modal-body">
-              <div class="form-group" id="group-form">
-                <div style="display: none;">
-                  <label for="">ID </label> <span>*</span>
-                  <input type="text" class="form-control" name="" id="" aria-describedby="helpId" placeholder="" formControlName="id"    >
-                </div>
-                <div class=" col-md-5">
-                  <label for="">Tên Homestay </label> <span>*</span>
-                  <span *ngIf="tenPhong.invalid && (tenPhong.dirty || tenPhong.touched)">
-                    <span *ngIf="tenPhong.errors?.['required']"
-                      >Tên sản phẩm không được rỗng</span></span>
-                  <input type="text" class="form-control" name="" id="" aria-describedby="helpId" placeholder="" formControlName="tenPhong"    >
-                </div>
-                
-                <div class="col-md-5">
-                     <div class="form-group">
-                      <label for="">Loại homestay</label>
-                      <select class="custom-select" name="" id="" formControlName="lsp">
-                        <option  *ngFor="let item of category" value="{{item.id}}">{{item.tenloai}}</option>
-                      </select>
-                     </div>
-                </div>
-              </div> 
-              <div class="form-group">
-                  <label for="">Giá tiền*</label>
-                  <span *ngIf="giatien.invalid && (giatien.dirty || giatien.touched)">
-                    <span *ngIf="giatien.errors?.['required']">Số tiền không được rỗng</span>
-                    <span *ngIf="giatien.errors?.['pattern']">Số tiền phải là số</span>
-                </span>
-                  <input type="text" class="form-control" name="" id="" aria-describedby="helpId" placeholder="" formControlName="dongia" >
-                </div> 
-                <div class="form-group">
-                  <label for="">Mô tả</label>
-                  <ckeditor formControlName="txt_mota" [editor]="Editor"></ckeditor>
-                </div> 
-                <div class="form-group">
-                    <label for="">Số lượng</label>
-                    <input type="text" class="form-control" name="" id="" aria-describedby="helpId" placeholder="" formControlName="txt_soluong" >
-                  </div> 
-                  <div class="form-group">
-                    <label for="">Ảnh homestay</label>
-                    <!-- <input type="file" 
-                    class="form-control" name="" id="files" aria-describedby="helpId" placeholder=""   > -->
-                    <div>
-                        <!-- <input type="file" (change)="onFileSelected($event)">
-                    
-                    <button (click)="uploadFile()">Upload</button> -->
-                    <input type="file" (change)="onFileSelected($event)">
-                    </div>
-                  </div> 
-                 
-                
-            </div>
-            <div class="modal-footer">
-              <button
-                class="btn btn-secondary"
-                data-dismiss="modal"
-                (click)="close()"
-              >
-                Close
-              </button>
-              <button type="submit" class="btn btn-primary">Save</button>
-            </div>
-          </div>
-        </div>
-      </form>
-    </div>
-
+ 
 
     <div class="modal-contain" [hidden]="active">
       <form [formGroup]="formSP" (submit)="add_Product(formSP.value)">
         <div class="modal-lg" role="document">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title">THÊM HOMESTAY</h5>
+              <h5 class="modal-title">{{title}} HOMESTAY</h5>
               <button
                 type="button"
                 class="close"
@@ -256,8 +172,8 @@
         >
           <td>{{ i + 1 }}</td>
           <td><img src="/assets/Homestay/{{ item.anh }}" alt="" style="width: 100px;height: 100px; border-radius: 5px ;"></td>
-          <td style="width: 300px;">{{ item.ten}}</td>
-          <td>{{ item.gia|currency:'VND'}}</td>
+          <td style="width: 300px;">{{ item.tenPhong}}</td>
+          <td>{{ item.dongia|currency:'VND'}}</td>
           <td>{{ item.trangthai==true?"Còn trống":"Đã đặt chỗ"}}</td>
 
           <!-- <td>{{ item.ngaySanxuat|date:'dd/MM/yy'}}</td>

@@ -1,1 +1,243 @@
-<p>account works!</p>
+<div class="loader" [hidden]="load"></div>
+<div class="row-toolbar">
+    <!-- <div class="info-msg" [hidden]="add_succes">
+      <i class="fa fa-info-circle"></i>
+      This is an info message.
+    </div>
+     -->
+    <div class="success-msg" [hidden]="add_succes">
+      <i class="fa fa-check"></i>
+     THÊM THÀNH CÔNG
+    </div>
+    
+     <!--<div class="warning-msg" [hidden]="add_succes">
+      <i class="fa fa-warning"></i>
+      This is a warning message.
+    </div> -->
+    
+    <div class="error-msg" [hidden]="delete_succes">
+      <i class="fa fa-times-circle"></i>
+     XÓA THÀNH CÔNG
+    </div>
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <a class="navbar-brand"><button type="button" (click)="Show(0)" class="btn btn-success"><i class="fa fa-plus">Thêm</i></button></a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div>
+        <select name="" id="" (change)="sizeChange($any($event))">
+          <option *ngFor="let item of table_numberSize"  value="{{item}}">{{item}}</option>
+       
+        </select>
+      </div>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div class="col-md-2" style="float: right;">
+          <div class="form-group">
+           <label for="">Loại homestay</label>
+           <select class="custom-select" name="" id="" (change)="filter($any($event))" >
+              <option value="0">Tất cả</option>
+             <option  *ngFor="let item of category" value="{{item.id}}">{{item.tenloai}}</option>
+           </select>
+          </div>
+     </div>
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="#"> <span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#"></a>
+          </li>
+        
+          <li class="nav-item">
+            <a class="nav-link disabled" href="#"></a>
+          </li>
+        </ul>
+        <form class="form-inline my-2 my-lg-0">
+          <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" id="searchs">
+          <button class="btn btn-outline-success my-2 my-sm-0" type="submit" (click)="search()">Search</button>
+        </form>
+      </div>
+    </nav>
+
+ 
+ 
+
+
+    <div class="modal-contain" [hidden]="active">
+      <form [formGroup]="formAC" (submit)="add_Product(formAC.value)">
+        <div class="modal-lg" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">THÊM HOMESTAY</h5>
+              <button
+                type="button"
+                class="close"
+                data-dismiss="modal"
+                aria-label="Close"
+                (click)="close()"
+              >
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+  
+            <div class="modal-body">
+              <div class="form-group" id="group-form" >
+                <div style="display: none;">
+                  <label for="">Tên homestay </label> <span>*</span>
+                  <input type="text" class="form-control" name="" id="" aria-describedby="helpId" placeholder="" formControlName="idsp"    >
+                </div>
+                <div class=" col-md-8">
+                  <label for="">Tên tài khoản</label> <span>*</span>
+                  <span *ngIf="taiKhoan?.invalid && (taiKhoan.dirty || taiKhoan.touched)">
+                    <span *ngIf="taiKhoan.errors?.['required']"
+                      >Tên sản phẩm không được rỗng</span></span>
+                  <input type="text" class="form-control" name="" id="" aria-describedby="helpId" placeholder="" formControlName="taikhoan"  >
+                </div>
+                <div class=" col-md-8">
+                  <label for="">Mật khẩu</label> <span>*</span>
+                  <span *ngIf="matKhau?.invalid && (matKhau.dirty || matKhau.touched)">
+                    <span *ngIf="matKhau.errors?.['required']"
+                      >Tên sản phẩm không được rỗng</span></span>
+                  <input type="text" class="form-control" name="" id="" aria-describedby="helpId" placeholder="" formControlName="matkhau"    >
+                </div>
+                <div class="col-md-5">
+                     <div class="form-group">
+                      <label for="">Loại quyền</label>
+                      <select class="custom-select" name="" id="" formControlName="loaiquyen">
+                        <option>Admin</option>
+                        <option>Nhân viên</option>
+                      </select>
+                     </div>
+                </div>
+                <div class="col-md-8">
+                    <div class="form-group">
+                     <label for="">Trạng thái</label>
+                     <select class="custom-select" name="" id="" formControlName="trangthai">
+                       <option  *ngFor="let item of status" value={{item.status}}>{{item.name}}</option>
+                     </select>
+                    </div>
+               </div>
+               <div class="col-md-8">
+                    <div class="form-group">
+                     <label for="">Ngày kết thúc</label>
+                     <input type="date" class="form-control" name="" id="" aria-describedby="helpId" placeholder="" formControlName="ngaykethuc"    >
+
+                    </div>
+               </div>
+              </div> 
+              <!-- <div class="form-group">
+                  <label for="">Giá tiền*</label>
+                  <span *ngIf="giatien.invalid && (giatien.dirty || giatien.touched)">
+                    <span *ngIf="giatien.errors?.['required']">Số tiền không được rỗng</span>
+                    <span *ngIf="giatien.errors?.['pattern']">Số tiền phải là số</span>
+                </span>
+                  <input type="text" class="form-control" name="" id="" aria-describedby="helpId" placeholder="" formControlName="dongia" >
+                </div>  -->
+                <!-- <div class="form-group">
+                  <label for="">Mô tả</label>
+                  <ckeditor formControlName="txt_mota" [editor]="Editor"></ckeditor>
+                </div>  -->
+                <!-- <div class="form-group">
+                    <label for="">Số lượng</label>
+                    <input type="text" class="form-control" name="" id="" aria-describedby="helpId" placeholder="" formControlName="txt_soluong" >
+                </div>  -->
+                <!-- <div class="form-group">
+                    <label for="">Ảnh Đại diện</label>
+                    <input type="file" 
+                    class="form-control" name="" id="files" aria-describedby="helpId" placeholder="" >
+                </div>  -->
+                 
+                
+            </div>
+            <div class="modal-footer">
+              <button
+                class="btn btn-secondary"
+                data-dismiss="modal"
+                (click)="close()"
+              >
+                Close
+              </button>
+              <button type="submit" class="btn btn-primary">Save</button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+  
+
+<div class="container">
+    <table class="tables">
+      <thead>
+        <tr>
+          <th style="width: 50px">STT</th>
+          <!-- <th>Ảnh</th> -->
+          <th>Tên tài khoản</th>
+          <th>Mật khẩu</th>
+          <th>loại quyền</th>
+          <th>Trạng thái</th>
+          <th>Ngày bắt đầu</th>
+          <th>Ngày kết thúc</th>
+          <th>Chức năng</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr
+          *ngFor="
+            let item of product
+              | paginate
+                :{
+                    itemsPerPage: tablesize,
+                    currentPage: page,
+                    totalItems: count
+                  };let i = index
+          "
+        >
+          <td>{{ i + 1 }}</td>
+          <!-- <td><img src="/assets/Homestay/{{ item.anh }}" alt="" style="width: 100px;height: 100px; border-radius: 5px ;"></td> -->
+          <!-- <td style="width: 300px;">{{ item.tenPhong}}</td> -->
+          <td>{{ item.taiKhoan}}</td>
+          <td>{{ item.matKhau}}</td>
+          <td>{{ item.loaiQuyen}}</td>
+          <td>{{ item.trangthai==true?"Hoạt động":"Offline"}}</td>
+          <td>{{ item.ngayBatDau|date:'dd/MM/yy HH:mm:ss'}}</td>
+          <td>{{ item.ngayKetThuc|date:'dd/MM/yy HH:mm:ss'}}</td>
+          <td id="icon_admin">
+            <button (click)="DeleteProduct(item.maTaiKhoan)" type="button" class="btn btn-danger"><i class="fa fa-trash" aria-hidden="true" ></i></button>
+            <button (click)="ShowModal(item.maTaiKhoan)" type="button" class="btn btn-warning"><i class="fa fa-edit" aria-hidden="true"></i></button>
+          </td>
+        </tr>
+      </tbody>
+      <tfoot>
+        <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td>
+          
+          </td>
+        </tr>
+      </tfoot>
+    </table>
+    <div id="paging">
+      <pagination-controls
+      previousLabel="Prev"
+      nextLabel="Next"
+      (pageChange)="dataChange($event)"
+    >
+    </pagination-controls>
+
+    </div>
+</div>
+
+<!-- Button trigger modal -->
+<!-- <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#modelId">
+  Launch
+</button> -->
+
+<!-- Modal -->
+
+
+

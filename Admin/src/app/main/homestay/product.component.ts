@@ -25,12 +25,13 @@ export class ProductComponent implements OnInit {
   table_numberSize:any = [5,10,15];
   size:any = 5;
   formSP!:FormGroup
+  Iscreated:any=true;
   active=true;
   actived=true;
   image:any;
   add_succes = true;
   delete_succes = true;
- 
+  title:any = "THÊM";
   category:any;
   load = false;
   public file: any;
@@ -88,68 +89,13 @@ export class ProductComponent implements OnInit {
       }
     );
   }
-  // onFileSelected(event: any): void {
-  //   const files: File = event.target.files[0];
-  //   console.log(files);
-  //   this.selectedFile = files;
-  // }
-
-  // uploadFile(): void {
-  //   if (this.selectedFile) {
-  //     if (this.selectedFile && this.selectedFile.name && this.selectedFile.size && this.selectedFile.type) {
-  //       // Thực hiện upload với đối tượng file hợp lệ
-  //       console.log('Đối tượng file hợp lệ:', this.selectedFile);
-  //     } else {
-  //       console.log('Đối tượng file không hợp lệ');
-  //     }
-  //     const formData = new FormData();
-  //     formData.append('file', this.selectedFile);
-  //     this.api.post('https://localhost:44310/api/FileUpload', formData)
-  //       .subscribe(
-  //         response => {
-  //           console.log('File uploaded successfully!');
-  //         },
-  //         error => {
-  //           console.error('Failed to upload file:', error);
-  //         }
-  //       );
-  //   }
-  // }
-
-
-
-
-
-
-  // onFileSelect(event: any) {
-  //   this.selectedFile = event.target.files[0];
-  //   console.log(this.selectedFile);
-  // }
-
-  
-  
-  // onFileSelect(event: any) {
-  //   if (event.target.files.length > 0) {
-  //     const file = event.target.files[0];
-  //     const formData = new FormData();
-  //     formData.append('file', file);
-  
-  //     this.api.post('https://localhost:44310/uploadfile', formData).subscribe(
-  //       (response) => {
-  //         console.log('Upload thành công!', response);
-  //       },
-  //       (error) => {
-  //         console.error('Upload thất bại:', error);
-  //       }
-  //     );
-  //   }
-  // }
-
+ 
 
   add_Product(item:any){
-    
+
     this.image = document.getElementById('files');
     let obj ={
+    id :item.id,
     tenPhong: item.tenPhong,
     idloaiPhong: 1,
     anh :this.image.files[0].name,
@@ -165,14 +111,24 @@ export class ProductComponent implements OnInit {
     }
     }
     console.log(obj);
-    this.api.post(this.host+'/add_homestay',obj).subscribe(data => {
-     this.active = true;
-     this.add_succes=false
-     setTimeout(()=>{this.add_succes=true;},2000);})
-  
+    if(this.Iscreated==true){
+      this.api.post(this.host+'/add_homestay',obj).subscribe(data => {
+        this.active = true;
+        this.add_succes=false
+        setTimeout(()=>{this.add_succes=true;},2000);})
+    }
+    else{
+      this.api.put(this.host+'/update_homestay',obj).subscribe(data => {
+        this.get();
+       this.actived = true;
+       this.add_succes=false
+       setTimeout(()=>{this.add_succes=true;},2000);})
+    }
   }
   ShowModal(item:any){
-    this.actived= false;
+    this.Iscreated=false;
+    this.title = "Sửa"
+    this.active= false;
     this.api.get(this.host+'/getht_by_id?id='+item).subscribe(data=>{
       this.getproduct_id = data;
       this.formSP = this.fb.group({
@@ -196,31 +152,7 @@ export class ProductComponent implements OnInit {
   //     });
   //   }
   // }
-  update_Product(item:any){
-    this.image = document.getElementById('files');
-    let obj ={
-      id :item.id,
-      tenPhong: item.tenPhong,
-      idloaiPhong: 1,
-      anh :this.image.files[0].name,
-      dongia : Number(item.dongia),
-      trangthai: true,
-      idloaiPhongNavigation: {
-        "id": 0,
-        "tenLoaiPhong": "string",
-        "ngayTao": "2023-05-19T09:19:21.785Z",
-        "nguoiTao": "string",
-        "ngayCapNhat": "2023-05-19T09:19:21.785Z",
-        "nguoiCapNhat": "string"
-      }
-      }
-    console.log(obj);
-    this.api.put(this.host+'/update_homestay',obj).subscribe(data => {
-      this.get();
-     this.actived = true;
-     this.add_succes=false
-     setTimeout(()=>{this.add_succes=true;},2000);})
-  }
+
   DeleteProduct(item:any){
     if(confirm('bạn có muốn xóa homestay'+item.ten)){
       this.api.delete(this.host+'/Delete_homestay?id='+item.id).subscribe(data => {

@@ -8,10 +8,14 @@
      width: 150px;
 }
 #icon_admin{
- display: flex;
- justify-content: space-between;
  width: 100px;
+ align-items: center;
+ text-align: center;
 }
+#icon_admin button{
+  margin-left: 10px;
+}
+
 #paging{
   float: right;
 }
@@ -89,4 +93,6 @@ html {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
 }
-
+.tables tbody tr:hover{
+    background-color: rgb(51, 121, 153);
+}

@@ -10,6 +10,8 @@ import { Routes } from '@angular/router';
 import { IndexComponent } from './index/index.component';
 import { RoleGuard } from '../core/guards/role.guard';
 import { Role } from '../entities/role';
+import { AccountComponent } from './account/account.component';
+import { NewComponent } from './new/new.component';
 export const MainRoutes: Routes = [
   {
     path: '', component: MainComponent,
@@ -29,6 +31,8 @@ export const MainRoutes: Routes = [
       { path: 'customer', component: CustomerComponent },
       { path: 'sell', component:  SellComponent},
       { path: 'detailbill', component:  DetailbillComponent},
+      { path: 'account', component:  AccountComponent},
+      { path: 'new', component:  NewComponent},
       // { path: 'homes', loadChildren: () => import('./homes/homes.module').then(m => m.HomesModule)},
       // { path: 'customers', loadChildren: () => import('./customers/customers.module').then(m => m.CustomersModule)},
     ]

@@ -16,9 +16,10 @@ import { CustomerComponent } from './customer/customer.component';
 import { SellComponent } from './sell/sell.component';
 import { DetailbillComponent } from './detailbill/detailbill.component';
 import { AccountComponent } from './account/account.component';
+import { NewComponent } from './new/new.component';
 @NgModule({
     declarations:
-     [MainComponent, IndexComponent, ProductComponent, CategoryComponent, OrderComponent, CustomerComponent, SellComponent, DetailbillComponent, AccountComponent],
+     [MainComponent, IndexComponent, ProductComponent, CategoryComponent, OrderComponent, CustomerComponent, SellComponent, DetailbillComponent, AccountComponent, NewComponent],
     imports: [
         CommonModule,
         SharedModule,
