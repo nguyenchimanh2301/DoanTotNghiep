@@ -100,7 +100,11 @@ namespace APIDoanV.Controllers
       try
       {
         var sp = db.Phongs.FirstOrDefault(sp => sp.Id == id);
-        db.Phongs.Remove(sp);
+                var p = db.ChitietDatPhongs.FirstOrDefault(x => x.Idp == id);
+                db.ChitietDatPhongs.Remove(p);
+                db.SaveChanges();
+
+                db.Phongs.Remove(sp);
         db.SaveChanges();
       }
       catch (Exception e)

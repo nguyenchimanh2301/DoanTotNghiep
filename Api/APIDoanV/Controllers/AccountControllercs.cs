@@ -1,11 +1,15 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using APIDoanV.Models;
+using APIDoanV.Model;
+using Microsoft.EntityFrameworkCore;
+
 namespace APIDoanV.Controllers
 {
     [ApiController]
     public class AccountControllercs : Controller
     {
-        ApiContext db = new ApiContext();
+        QuanlyhomestayContext db = new QuanlyhomestayContext();
+
         [Route("get_all_account")]
         [HttpGet]
         public IActionResult Get_allAccount()
@@ -41,8 +45,8 @@ namespace APIDoanV.Controllers
             return Json(account);
         }
         [Route("add_Account")]
-        [HttpGet]
-        public void add_Account(Account lsp)
+        [HttpPost]
+        public void add_Account(Model.Account lsp)
         {
             try
             {
@@ -54,13 +58,13 @@ namespace APIDoanV.Controllers
                 throw e;
             }
         }
-       /* [Route("delete_Account")]
+        [Route("delete_Account")]
         [HttpDelete]
-        public void deleteCategory(int maacc)
+        public void deleteAccount(int maacc)
         {
             try
             {
-                Account ac = db.Accounts.Where(x => x.MaTaiKhoan == maacc).FirstOrDefault();
+                Model.Account ac = db.Accounts.Where(x => x.MaTaiKhoan == maacc).FirstOrDefault();
                 db.Accounts.Remove(ac);
                 db.SaveChanges();
             }
@@ -68,6 +72,35 @@ namespace APIDoanV.Controllers
             {
                 throw e;
             }
-        }*/
+        }
+        [Route("update_Account")]
+        [HttpGet]
+        public void update_Account(Model.Account ac)
+        {
+            try
+            {
+                db.Accounts.Attach(ac);
+                db.Entry(ac).State = EntityState.Modified;
+                db.SaveChanges();
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+        [Route("Search_Account")]
+        [HttpGet]
+        public IActionResult search_Account(string lq)
+        {
+            try
+            {
+                var c = db.Accounts.Select(x => x.LoaiQuyen == lq).ToList();
+                return Json(c);
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
     }
 }

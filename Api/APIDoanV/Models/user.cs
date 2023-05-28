@@ -1,34 +1,19 @@
-namespace Models
+﻿using System;
+using System.Collections.Generic;
+
+namespace APIDoanV.Models;
+
+public partial class User
 {
-    using System;
-    using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-    using System.ComponentModel.DataAnnotations.Schema;
-    using System.Data.Entity.Spatial;
+    public string Id { get; set; } = null!;
 
-    public partial class user
-    {
-        [StringLength(20)]
-        public string id { get; set; }
+    public string FullName { get; set; } = null!;
 
-        [Required]
-        [StringLength(50)]
-        public string full_name { get; set; }
+    public string Address { get; set; } = null!;
 
-        [Required]
-        [StringLength(50)]
-        public string users_name { get; set; }
+    public string Email { get; set; } = null!;
 
-        [Required]
-        [StringLength(255)]
-        public string email { get; set; }
+    public string Password { get; set; } = null!;
 
-        [Required]
-        [StringLength(255)]
-        public string password { get; set; }
-
-        [Required]
-        [StringLength(20)]
-        public string phone { get; set; }
-    }
+    public string Phone { get; set; } = null!;
 }
