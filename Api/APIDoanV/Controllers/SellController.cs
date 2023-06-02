@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using APIDoanV.Models;
+
 using System.Linq;
 using System.Collections.Generic;
 using APIDoanV.Entities;

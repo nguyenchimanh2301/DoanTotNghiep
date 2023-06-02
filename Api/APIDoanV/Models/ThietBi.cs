@@ -17,7 +17,5 @@ public partial class ThietBi
 
     public string? Kichthuoc { get; set; }
 
-    public virtual LoaiThietBi? IdloaiTbNavigation { get; set; }
 
-    public virtual ICollection<Lapdat> Lapdats { get; } = new List<Lapdat>();
 }

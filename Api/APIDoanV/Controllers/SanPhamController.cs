@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 using System.Collections.Generic;
-using APIDoanV.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace APIDoanV.Controllers

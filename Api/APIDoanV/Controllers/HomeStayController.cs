@@ -67,6 +67,7 @@ namespace APIDoanV.Controllers
 
       try
       {
+        sp.IdloaiPhongNavigation = null;
         db.Phongs.Add(sp);
         db.SaveChanges();
       }
@@ -83,6 +84,7 @@ namespace APIDoanV.Controllers
 
       try
       {
+        sp.IdloaiPhongNavigation = null;
         db.Phongs.Attach(sp);
         db.Entry(sp).State = EntityState.Modified;
         db.SaveChanges();
@@ -100,11 +102,19 @@ namespace APIDoanV.Controllers
       try
       {
         var sp = db.Phongs.FirstOrDefault(sp => sp.Id == id);
-                var p = db.ChitietDatPhongs.FirstOrDefault(x => x.Idp == id);
-                db.ChitietDatPhongs.Remove(p);
-                db.SaveChanges();
+         var p = db.ChitietDatPhongs.FirstOrDefault(x => x.Idp == id);
+                if (p != null)
+                {
+                    db.ChitietDatPhongs.Remove(p);
+                    db.SaveChanges();
+                    db.Phongs.Remove(sp);
+                }
+                else
+                {
+                    db.Phongs.Remove(sp);
 
-                db.Phongs.Remove(sp);
+                }
+
         db.SaveChanges();
       }
       catch (Exception e)
@@ -115,10 +125,10 @@ namespace APIDoanV.Controllers
     }
     [Route("Search_Homstay")]
     [HttpGet]
-    public IActionResult Search(string name)
+    public IActionResult Search(string? name,int? idloai)
     {
 
-      if (string.IsNullOrEmpty(name))
+      if (name==null && idloai==null)
       {
         var obj = (from sp in db.Phongs
                    join
@@ -135,8 +145,41 @@ namespace APIDoanV.Controllers
                    });
         return Json(obj);
       }
-      else
-      {
+      else if (name == null && idloai != null)
+            {
+                var obj = (from sp in db.Phongs
+                           join
+                 l in db.LoaiPhongs on sp.IdloaiPhong equals l.Id
+                           select new
+                           {
+                               sp.Id,
+                               l.TenLoaiPhong,
+                               sp.IdloaiPhong,
+                               sp.TenPhong,
+                               sp.Anh,
+                               sp.Dongia,
+                               sp.Trangthai
+                           }).Where(x =>x.IdloaiPhong == idloai);
+                return Json(obj);
+            }
+            else if (name != null && idloai == null)
+            {
+                var obj = (from sp in db.Phongs
+                           join
+                 l in db.LoaiPhongs on sp.IdloaiPhong equals l.Id
+                           select new
+                           {
+                               sp.Id,
+                               l.TenLoaiPhong,
+                               sp.IdloaiPhong,
+                               sp.TenPhong,
+                               sp.Anh,
+                               sp.Dongia,
+                               sp.Trangthai
+                           }).Where(x=>x.TenPhong.ToLower().Contains(name.ToLower()));
+                return Json(obj);
+            }
+            else
         {
           var obj = (from sp in db.Phongs
                      join
@@ -150,11 +193,10 @@ namespace APIDoanV.Controllers
                        sp.Anh,
                        sp.Dongia,
                        sp.Trangthai
-                     }).Where(x => x.TenPhong.ToLower().Contains(name.ToLower()));
+                     }).Where(x => x.TenPhong.ToLower().Contains(name.ToLower()) && x.IdloaiPhong==idloai);
           return Json(obj);
 
         }
-      }
 
     }
   }

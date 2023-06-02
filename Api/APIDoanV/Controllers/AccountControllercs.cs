@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using APIDoanV.Models;
 using APIDoanV.Model;
 using Microsoft.EntityFrameworkCore;
 
@@ -23,7 +22,7 @@ namespace APIDoanV.Controllers
                 NgayKetThuc = x.NgayKetThuc,
                 LoaiQuyen= x.LoaiQuyen,
                 TrangThai= x.TrangThai,
-                MaNguoiDung= x.MaNguoiDung
+                MaNguoiDung= x.Idkh
             });
             return Json(account);
         }
@@ -40,7 +39,7 @@ namespace APIDoanV.Controllers
                 NgayKetThuc = x.NgayKetThuc,
                 LoaiQuyen = x.LoaiQuyen,
                 TrangThai = x.TrangThai,
-                MaNguoiDung = x.MaNguoiDung
+                MaNguoiDung = x.Idkh
             }).Where(x=>x.MaTaiKhoan==id).FirstOrDefault();
             return Json(account);
         }
@@ -50,6 +49,7 @@ namespace APIDoanV.Controllers
         {
             try
             {
+                lsp.IdkhNavigation = null;
                 db.Accounts.Add(lsp);
                 db.SaveChanges();
             }
@@ -79,6 +79,7 @@ namespace APIDoanV.Controllers
         {
             try
             {
+                ac.IdkhNavigation = null;
                 db.Accounts.Attach(ac);
                 db.Entry(ac).State = EntityState.Modified;
                 db.SaveChanges();

@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Authorization;
 using APIDoanV.Services;
 using APIDoanV.Models;
+using APIDoanV.Model;
+
 namespace APIDoanV.Controllers
 {
     [Authorize]
@@ -11,8 +13,8 @@ namespace APIDoanV.Controllers
     public class UserController : Controller
     {
         private IUserService _userService;
-        ApiContext db = new ApiContext();
-        
+        /*ApiContext db = new ApiContext();*/
+        QuanlyhomestayContext db =new QuanlyhomestayContext();
         public UserController(IUserService userService)
         {
             _userService = userService;

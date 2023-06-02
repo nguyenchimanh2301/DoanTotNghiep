@@ -16,4 +16,6 @@ public partial class User
     public string Password { get; set; } = null!;
 
     public string Phone { get; set; } = null!;
+
+    public virtual ICollection<Account> Accounts { get; } = new List<Account>();
 }

@@ -32,8 +32,15 @@ namespace API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddCors(options => {
+           /* services.AddCors(options => {
                 options.AddPolicy("AllowAll", builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
+            });*/
+            services.AddCors(options =>
+            {
+                options.AddPolicy("AllowOrigin",
+                builder => builder.AllowAnyOrigin()
+                              .AllowAnyMethod()
+                              .AllowAnyHeader());
             });
             services.AddControllers();
      
@@ -76,10 +83,12 @@ namespace API
         {
             app.UseRouting();
             // global cors policy
+            app.UseCors("AllowOrigin");
             app.UseCors(x => x
                 .AllowAnyOrigin()
                 .AllowAnyMethod()
                 .AllowAnyHeader());
+
             app.UseAuthentication();
             app.UseAuthorization();
             app.UseEndpoints(endpoints =>

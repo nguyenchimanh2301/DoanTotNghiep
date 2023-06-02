@@ -25,6 +25,10 @@ public partial class Phong
 
     public string? NguoiCapNhat { get; set; }
 
+    public string? Mota { get; set; }
+
+    public string? DiaChi { get; set; }
+
     public virtual ICollection<ChitietDatPhong> ChitietDatPhongs { get; } = new List<ChitietDatPhong>();
 
     public virtual ICollection<HoaDonBanHang> HoaDonBanHangs { get; } = new List<HoaDonBanHang>();

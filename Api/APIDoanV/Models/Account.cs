@@ -20,4 +20,6 @@ public partial class Account
     public bool? TrangThai { get; set; }
 
     public string? LoaiQuyen { get; set; }
+
+    public virtual User? MaNguoiDungNavigation { get; set; }
 }

@@ -16,20 +16,29 @@ namespace APIDoanV.Controllers
 
       // Đường dẫn tới thư mục lưu trữ file
       string folderPath = "C:/Users/ASUS/Desktop/Admin-master/src/assets/Homestay";
+      string folderPath2 = "C:/Users/ASUS/Desktop/PROJECT/src/assets/homestay/imghomestay";
 
-      // Tạo đường dẫn tới file
-      string filePath = Path.Combine(folderPath, file.FileName);
 
-      // Kiểm tra thư mục lưu trữ file đã tồn tại chưa, nếu chưa thì tạo mới
-      if (!Directory.Exists(folderPath))
+            // Tạo đường dẫn tới file
+     string filePath = Path.Combine(folderPath, file.FileName);
+      string filePath2 = Path.Combine(folderPath2, file.FileName);
+
+
+            // Kiểm tra thư mục lưu trữ file đã tồn tại chưa, nếu chưa thì tạo mới
+      if (!Directory.Exists(folderPath) && !Directory.Exists(folderPath))
       {
         Directory.CreateDirectory(folderPath);
+         Directory.CreateDirectory(folderPath2);
+
       }
 
-      // Lưu file vào thư mục
-      using (var stream = new FileStream(filePath, FileMode.Create))
+            // Lưu file vào thư mục
+            using (var stream = new FileStream(filePath, FileMode.Create))
+            using (var stream2 = new FileStream(filePath2,FileMode.Create))
+
       {
-        await file.CopyToAsync(stream);
+                await file.CopyToAsync(stream);
+                await file.CopyToAsync(stream2);
       }
 
       return Ok("File uploaded successfully!");

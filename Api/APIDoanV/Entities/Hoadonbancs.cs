@@ -1,4 +1,4 @@
-﻿using APIDoanV.Models;
+﻿/*using APIDoanV.Models;
 using System.Collections.Generic;
 namespace APIDoanV.Entities
 {
@@ -9,3 +9,4 @@ namespace APIDoanV.Entities
 
     }
 }
+*/

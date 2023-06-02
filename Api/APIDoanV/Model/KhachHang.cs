@@ -17,5 +17,7 @@ public partial class KhachHang
 
     public string? Note { get; set; }
 
+    public virtual ICollection<Account> Accounts { get; } = new List<Account>();
+
     public virtual ICollection<DatPhong> DatPhongs { get; } = new List<DatPhong>();
 }

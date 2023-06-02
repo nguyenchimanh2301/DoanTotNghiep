@@ -22,6 +22,14 @@ namespace APIDoanV.Controllers
             return Json(result);
 
         }
+        [Route("add_bill")]
+        [HttpPost]
+        public void postbill(DatPhong dp)
+        {
+
+            dbc.DatPhongs.Add(dp);
+            dbc.SaveChanges();
+        }
         [Route("get_Cus")]
         [HttpGet]
         public IActionResult Getcus()
@@ -43,34 +51,30 @@ namespace APIDoanV.Controllers
         {
             dbc.KhachHangs.Add(model.kh);
             dbc.SaveChanges();
-
             int MaKhachHang = model.kh.Id;
-            DatPhong dh = new DatPhong();
-            dh.Idkh = MaKhachHang;
-            dh.Thanhtoan = true;
-            dh.Ngaydat = DateTime.Now;
-            dbc.DatPhongs.Add(dh);
-            dbc.SaveChanges();
-
-            int MaDonHang = dh.Id;
-
-            foreach (var item in model.donhang)
-            {
-                item.Iddondat = MaDonHang;
+            model.datphong.Idkh = MaKhachHang;
+            model.datphong.Tenkh = model.kh.TenKh;
+            model.datphong.Thanhtoan = true;
+                model.datphong.IdkhNavigation = null;
+                dbc.DatPhongs.Add(model.datphong);
+                dbc.SaveChanges();
+                int MaDonHang = model.datphong.Id;
+                model.donhang.Iddondat = MaDonHang;
                 // Xóa navigation property trước khi thêm vào cơ sở dữ liệu
-                item.IdpNavigation = null;
-                dbc.ChitietDatPhongs.Add(item);
-            }
-            dbc.SaveChanges();
-
+                model.donhang.IdpNavigation = null;
+                dbc.ChitietDatPhongs.Add(model.donhang);
+                dbc.SaveChanges();
+           
             return Ok(new { data = "OK" });
         }
 
         public class CheckoutModel
         {
             public KhachHang kh { get; set; }
-            public List<ChitietDatPhong> donhang { get; set; }
+            public ChitietDatPhong donhang { get; set; }
+            public DatPhong datphong { get; set; }
+
         }
-        /*Scaffold-DbContext "Server=LAPTOP-LLHPT87U\SQLEXPRESS;Database=API;Trusted_Connection=True;Encrypt=False" Microsoft.EntityFrameworkCore.SqlServer -OutputDir Models -force*/
+        /*Scaffold-DbContext "Server=LAPTOP-LLHPT87U\SQLEXPRESS;Database=QUANLYHOMESTAY;Trusted_Connection=True;Encrypt=False" Microsoft.EntityFrameworkCore.SqlServer -OutputDir Model -force*/
     }
 }

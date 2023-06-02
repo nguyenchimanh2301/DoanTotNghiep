@@ -7,7 +7,7 @@ public partial class Account
 {
     public int MaTaiKhoan { get; set; }
 
-    public string? MaNguoiDung { get; set; }
+    public int Idkh { get; set; }
 
     public string? TaiKhoan { get; set; }
 
@@ -20,4 +20,6 @@ public partial class Account
     public bool? TrangThai { get; set; }
 
     public string? LoaiQuyen { get; set; }
+
+    public virtual KhachHang IdkhNavigation { get; set; } = null!;
 }

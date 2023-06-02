@@ -17,5 +17,4 @@ public partial class TinhLuong
 
     public int? Songaynghi { get; set; }
 
-    public virtual NhanVien IdusernameNavigation { get; set; } = null!;
 }
