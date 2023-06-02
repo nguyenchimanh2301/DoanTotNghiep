@@ -9,7 +9,6 @@ import { JwtInterceptor } from './core/interceptors/jwt.interceptor';
 import { ErrorInterceptor } from './core/interceptors/error.interceptor';
 import { HTTP_INTERCEPTORS, HttpClient } from '@angular/common/http';
 import { HttpClientModule } from '@angular/common/http';
-import { UploadService } from './core/services/image.service';
 
 @NgModule({
     declarations: [
@@ -29,7 +28,6 @@ import { UploadService } from './core/services/image.service';
     providers: [
         { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
         { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
-        UploadService
     ],
     
 })

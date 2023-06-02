@@ -18,13 +18,13 @@ export const MainRoutes: Routes = [
     children: [
       { path: '', component: IndexComponent },
       { path: 'unauthorized', component: UnauthorizedComponent },
-      {
-        path: 'user',
-        loadChildren: () =>
-          import('./user/user.module').then((m) => m.UserModule),
-        canActivate: [RoleGuard],
-        data: { roles: [Role.Admin] },
-      },
+      // {
+      //   path: 'user',
+      //   loadChildren: () =>
+      //     import('./user/user.module').then((m) => m.UserModule),
+      //   canActivate: [RoleGuard],
+      //   data: { roles: [Role.Admin] },
+      // },
       { path: 'product', component: ProductComponent },
       { path: 'category', component: CategoryComponent },
       { path: 'order', component: OrderComponent },

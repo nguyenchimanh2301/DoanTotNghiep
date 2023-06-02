@@ -4,7 +4,6 @@ import { Component, ElementRef, OnInit ,ViewChild } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
-import { UploadService } from './../../core/services/image.service';
 import { Observable } from 'rxjs';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 
@@ -43,7 +42,7 @@ export class AccountComponent implements OnInit {
     'status':false,
   }
 ];
-  constructor(private api:HttpClient,private fb:FormBuilder,private apisv:ApiService ,private uploads:UploadService) {
+  constructor(private api:HttpClient,private fb:FormBuilder,private apisv:ApiService ) {
    }
 
   ngOnInit(): void {

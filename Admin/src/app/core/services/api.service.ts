@@ -14,18 +14,14 @@ export class ApiService {
     constructor(private _http: HttpClient, public router: Router) { }
 
     public post(url: string, obj: any) {
-        const body = FormData;
-        let cloneHeader: any = {};
-        cloneHeader['Content-Type'] = 'multipart/form-data';
-        const headerOptions = new HttpHeaders(cloneHeader);
-        return this._http
-            .post<any>(this.host + url, body, { headers: headerOptions })
-            .pipe(
-                map((res: any) => {
-                    return res;
-                })
-            );
-    }
+        const body = new FormData();
+        body.append('file', obj.value1); // Thêm dữ liệu value1 với khóa key1
+        return this._http.post<any>(this.host + url, body).pipe(
+          map((res: any) => {
+            return res;
+          })
+        );
+      }
    
     public get(url: string) {
         let cloneHeader: any = {};

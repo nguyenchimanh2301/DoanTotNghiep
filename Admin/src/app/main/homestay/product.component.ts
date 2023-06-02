@@ -5,7 +5,6 @@ import { Component, ElementRef, OnInit ,ViewChild } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
-import { UploadService } from './../../core/services/image.service';
 import { Observable } from 'rxjs';
 
 @Component({
@@ -36,33 +35,34 @@ export class ProductComponent implements OnInit {
   load = false;
   public file: any;
   public Editor = ClassicEditor;
-  constructor(private api:HttpClient,private fb:FormBuilder,private apisv:ApiService ,private uploads:UploadService) { }
+  public selectedOption!: number;
+  @ViewChild('fileInput') fileInput: any;
+  constructor(private api:HttpClient,private fb:FormBuilder,private apisv:ApiService ) { }
  
   ngOnInit(): void {
     this.api.get(this.host+'/get_all_loaihomestay').subscribe(data => {
       this.category = data;
+      
     })
     this.get();
     this.formSP = new FormGroup({
-      'tenPhong': new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(20)]),
-      'dongia': new FormControl('', [Validators.required, Validators.pattern("^((\\+91-?)|0)?[0-9]{10}$")]),
+      'ten_Phong': new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(20)]),
+      'don_gia': new FormControl('', [Validators.required, Validators.pattern("^((\\+91-?)|0)?[0-9]{10}$")]),
       'lsp': new FormControl('', [Validators.required]),
-      'txt_mota': new FormControl(''),
-      'txt_soluong': new FormControl('', [Validators.required, Validators.pattern("^((\\+91-?)|0)?[0-9]{10}$")]),
-      'txt_donvi': new FormControl(''),
-      'ngaySanxuat': new FormControl(''),
-      'hanSudung': new FormControl(''),
+      
+      // 'txt_mota': new FormControl(''),
+      // 'txt_soluong': new FormControl('', [Validators.required, Validators.pattern("^((\\+91-?)|0)?[0-9]{10}$")]),
+      // 'txt_donvi': new FormControl(''),
+      // 'ngaySanxuat': new FormControl(''),
+      // 'hanSudung': new FormControl(''),
     });
   }
-
-
-
  
   get tenPhong() {
-    return this.formSP.get('tenPhong')!;
+    return this.formSP.get('ten_Phong')!;
   }
   get giatien() {
-    return this.formSP.get('dongia')!;
+    return this.formSP.get('don_gia')!;
   }
   get mota() {
     return this.formSP.get('txt_mota')!;
@@ -76,31 +76,40 @@ export class ProductComponent implements OnInit {
   }
 
   onFileSelected(event: any) {
-    const file: File = event.target.files[0];
-    console.log(file);
-    this.apisv.uploadFiles(file).subscribe(
-      response => {
-        // Xử lý kết quả thành công
-        console.log('Upload thành công:', response);
-      },
-      error => {
-        // Xử lý lỗi nếu có
-        console.log('Lỗi upload:', error);
+    const files: FileList = event.target.files;
+        this.selectedFile = files.item(0);
+        if (this.selectedFile) {
+          const formData = new FormData();
+          formData.append('file', this.selectedFile);
+          this.api.post(this.host+'/api/FileUpload', formData)
+            .subscribe(
+              response => {
+                console.log(response); // Xử lý phản hồi từ API (nếu cần)
+              },
+              error => {
+                console.error(error); // Xử lý lỗi (nếu có)
+              }
+            );
+        } else {
+          console.error("No file selected.");
+        }
+
+
+
       }
-    );
-  }
- 
+  
+   
 
   add_Product(item:any){
 
     this.image = document.getElementById('files');
     let obj ={
     id :item.id,
-    tenPhong: item.tenPhong,
-    idloaiPhong: 1,
-    anh :this.image.files[0].name,
-    dongia : item.dongia,
-    trangthai: true,
+    tenPhong: item.ten_Phong,
+    idloaiPhong: this.selectedOption,
+    anh :this.selectedFile?.name,
+    dongia : item.don_gia,
+    trangthai: false,
     idloaiPhongNavigation: {
       "id": 0,
       "tenLoaiPhong": "string",
@@ -113,6 +122,7 @@ export class ProductComponent implements OnInit {
     console.log(obj);
     if(this.Iscreated==true){
       this.api.post(this.host+'/add_homestay',obj).subscribe(data => {
+        this.get();
         this.active = true;
         this.add_succes=false
         setTimeout(()=>{this.add_succes=true;},2000);})
@@ -120,7 +130,7 @@ export class ProductComponent implements OnInit {
     else{
       this.api.put(this.host+'/update_homestay',obj).subscribe(data => {
         this.get();
-       this.actived = true;
+       this.active = true;
        this.add_succes=false
        setTimeout(()=>{this.add_succes=true;},2000);})
     }
@@ -131,18 +141,19 @@ export class ProductComponent implements OnInit {
     this.active= false;
     this.api.get(this.host+'/getht_by_id?id='+item).subscribe(data=>{
       this.getproduct_id = data;
+      console.log(this.getproduct_id);
       this.formSP = this.fb.group({
         id:   [this.getproduct_id.id,Validators.required],
-        tenPhong:   [this.getproduct_id.ten,Validators.required],
+        ten_Phong:   [this.getproduct_id.ten,Validators.required],
         lsp:         [this.getproduct_id.idloai,Validators.required],
-        dongia: [this.getproduct_id.dongia,Validators.required],
+        don_gia: [this.getproduct_id.gia,Validators.required],
+
         // txt_mota:    [this.getproduct_id.motaSp,Validators.required],
         // txt_soluong: [this.getproduct_id.so_luong,Validators.required],
         // txt_donvi:   [this.getproduct_id.donViTinh,Validators.required],
         // ngaySanxuat: [this.getproduct_id.ngaySanxuat,Validators.required],
         // hanSudung:   [this.getproduct_id.hanSudung,Validators.required],
       });
-      
     });
   }
   // public upload(event: any) {
@@ -178,14 +189,13 @@ export class ProductComponent implements OnInit {
   Show(value:any){
       this.active=false;
       this.formSP = this.fb.group({
-        txt_tensp   : [''],
+        ten_Phong   : [''],
         lsp:         [''],
-        txt_giatien: [''],
-        txt_mota:    [''],
-        txt_soluong: [''],
-        txt_donvi:   [''],
-        ngaySanxuat: [''] ,
-        hanSudung:   ['']
+        don_gia: [''],
+        // txt_mota:    [''],
+        // txt_soluong: [''],
+        // txt_donvi:   [''],
+
       });
   }
   get():void{
@@ -198,7 +208,7 @@ export class ProductComponent implements OnInit {
   search(){
     let name = (<HTMLInputElement>document.getElementById('searchs')).value;
     console.log(name);
-    this.api.get(this.host+'/Search_LoaiHomstay?name='+name).subscribe(data=>{
+    this.api.get(this.host+'/Search_Homstay?name='+name).subscribe(data=>{
       this.product = data;
     });
   }
@@ -208,7 +218,7 @@ export class ProductComponent implements OnInit {
       this.get();
     }
     else{
-      this.api.get(this.host+'/Search_by_idcategory?id='+item).subscribe(res=>{
+      this.api.get(this.host+'/Search_Homstay?idloai='+item).subscribe(res=>{
         this.product = res;
       })
     }
