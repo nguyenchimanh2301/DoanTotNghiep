@@ -48,11 +48,10 @@ export class CategoryComponent implements OnInit {
     if(this.iscreate){
       console.log(obj);
       this.api.post(this.host+'/add_loaihomestay',obj).subscribe(data => {
-        if(data){
           this.get();
+          this.active = true;
           this.add_succes=false
           setTimeout(()=>{this.add_succes=true;},2000);
-        }
       })
     }
     else{
@@ -123,7 +122,7 @@ export class CategoryComponent implements OnInit {
   search(){
     let name = (<HTMLInputElement>document.getElementById('searchs')).value;
     console.log(name);
-    this.api.get(this.host+'/Search?name='+name).subscribe(data=>{
+    this.api.get(this.host+'/earch_Homstay?name=z'+name).subscribe(data=>{
        
       this.categories = data;
     });

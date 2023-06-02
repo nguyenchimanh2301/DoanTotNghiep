@@ -7,7 +7,7 @@
      -->
     <div class="success-msg" [hidden]="add_succes">
       <i class="fa fa-check"></i>
-     THÊM THÀNH CÔNG
+    {{title}} THÀNH CÔNG
     </div>
     
      <!--<div class="warning-msg" [hidden]="add_succes">
@@ -37,7 +37,7 @@
            <label for="">Loại homestay</label>
            <select class="custom-select" name="" id="" (change)="filter($any($event))" >
               <option value="0">Tất cả</option>
-             <option  *ngFor="let item of category" value="{{item.id}}">{{item.tenloai}}</option>
+             <option  *ngFor="let item of category" value={{item.id}}>{{item.tenloai}}</option>
            </select>
           </div>
      </div>
@@ -91,13 +91,13 @@
                   <span *ngIf="tenPhong.invalid && (tenPhong.dirty || tenPhong.touched)">
                     <span *ngIf="tenPhong.errors?.['required']"
                       >Tên sản phẩm không được rỗng</span></span>
-                  <input type="text" class="form-control" name="" id="" aria-describedby="helpId" placeholder="" formControlName="tenPhong"    >
+                  <input type="text" class="form-control" name="" id="" aria-describedby="helpId" placeholder="" formControlName="ten_Phong"    >
                 </div>
                 <div class="col-md-5">
                      <div class="form-group">
                       <label for="">Loại homestay</label>
-                      <select class="custom-select" name="" id="" formControlName="lsp">
-                        <option  *ngFor="let item of category" value="{{item.id}}">{{item.tenloai}}</option>
+                      <select class="custom-select" name="" id="" formControlName="lsp" [(ngModel)]="selectedOption">
+                        <option  *ngFor="let item of category" value={{item.id}}>{{item.tenloai}}</option>
                       </select>
                      </div>
                 </div>
@@ -108,32 +108,24 @@
                     <span *ngIf="giatien.errors?.['required']">Số tiền không được rỗng</span>
                     <span *ngIf="giatien.errors?.['pattern']">Số tiền phải là số</span>
                 </span>
-                  <input type="text" class="form-control" name="" id="" aria-describedby="helpId" placeholder="" formControlName="dongia" >
+                  <input type="text" class="form-control" name="" id="" aria-describedby="helpId" placeholder="" formControlName="don_gia" >
                 </div> 
                 <div class="form-group">
                   <label for="">Mô tả</label>
                   <ckeditor formControlName="txt_mota" [editor]="Editor"></ckeditor>
                 </div> 
-                <div class="form-group">
+                <!-- <div class="form-group">
                     <label for="">Số lượng</label>
                     <input type="text" class="form-control" name="" id="" aria-describedby="helpId" placeholder="" formControlName="txt_soluong" >
-                  </div> 
+                  </div>  -->
                   <div class="form-group">
                     <label for="">Ảnh homestay</label>
-                    <input type="file" 
-                    class="form-control" name="" id="files" aria-describedby="helpId" placeholder="" >
+                    <input type="file" (change)="onFileSelected($any($event))">
                   </div> 
                  
                 
             </div>
             <div class="modal-footer">
-              <button
-                class="btn btn-secondary"
-                data-dismiss="modal"
-                (click)="close()"
-              >
-                Close
-              </button>
               <button type="submit" class="btn btn-primary">Save</button>
             </div>
           </div>
@@ -150,6 +142,7 @@
           <th style="width: 50px">STT</th>
           <th>Ảnh</th>
           <th>Tên Homestay</th>
+          <th>Tên loại</th>
           <th>Đơn Giá thuê</th>
           <th>Trạng thái</th>
 
@@ -173,6 +166,7 @@
           <td>{{ i + 1 }}</td>
           <td><img src="/assets/Homestay/{{ item.anh }}" alt="" style="width: 100px;height: 100px; border-radius: 5px ;"></td>
           <td style="width: 300px;">{{ item.tenPhong}}</td>
+          <td style="width: 300px;">{{ item.tenLoaiPhong}}</td>
           <td>{{ item.dongia|currency:'VND'}}</td>
           <td>{{ item.trangthai==true?"Còn trống":"Đã đặt chỗ"}}</td>
 
