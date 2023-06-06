@@ -33,13 +33,13 @@
       </div>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <div class="col-md-2" style="float: right;">
-          <div class="form-group">
+          <!-- <div class="form-group">
            <label for="">Loại homestay</label>
            <select class="custom-select" name="" id="" (change)="filter($any($event))" >
               <option value="0">Tất cả</option>
              <option  *ngFor="let item of category" value={{item.id}}>{{item.tenloai}}</option>
            </select>
-          </div>
+          </div> -->
      </div>
         <ul class="navbar-nav mr-auto">
           <li class="nav-item active">
@@ -55,7 +55,7 @@
         </ul>
         <form class="form-inline my-2 my-lg-0">
           <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" id="searchs">
-          <button class="btn btn-outline-success my-2 my-sm-0" type="submit" (click)="search()">Search</button>
+          <button class="btn btn-outline-success my-2 my-sm-0" type="submit" (click)="search()">Tìm kiếm</button>
         </form>
       </div>
     </nav>
@@ -103,8 +103,8 @@
                 </div> -->
               </div> 
                 <div class="form-group">
-                  <label for="">Mô tả</label>
-                  <ckeditor formControlName="noidung" [editor]="Editor"></ckeditor>
+                  <label for="">Nội Dung</label>
+                  <ckeditor [editor]="Editor" formControlName="noidung" (ready)="onEditorReady($event)"></ckeditor>
                 </div> 
                 <!-- <div class="form-group">
                     <label for="">Số lượng</label>

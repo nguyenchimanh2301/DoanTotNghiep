@@ -1,10 +1,13 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { ApiService } from 'src/app/core/services/api.service';
 import { FileUploadService } from 'src/app/core/services/file-upload.service';
 import { environment } from 'src/environments/environment';
+import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import { CKEditorComponent } from '@ckeditor/ckeditor5-angular';
+import { htmlToText } from 'html-to-text';
+
 @Component({
   selector: 'app-new',
   templateUrl: './new.component.html',
@@ -21,18 +24,19 @@ export class NewComponent implements OnInit {
    public tablesize:number = 5;
   table_numberSize:any = [5,10,15];
   size:any = 5;
-  title:any = 5;
+  title:any = "THÊM";
   formTT!:FormGroup
   active=true;
   actived=true;
   image:any;
   add_succes = true;
   delete_succes = true;
-  iscreated:any = true;
+  iscreated:any = false;
   category:any;
   load = false;
   public file: any;
   public Editor = ClassicEditor;
+  public ckEditorInstance: any;
   status:any =[{
     'name':'Online',
     'status':true,
@@ -54,16 +58,17 @@ export class NewComponent implements OnInit {
     })
     this.formTT = new FormGroup({
       'tieude': new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(20)]),
-      'matkhau': new FormControl('', [Validators.required, Validators.pattern("^((\\+91-?)|0)?[0-9]{10}$")]),
-      'loaiquyen': new FormControl('', [Validators.required]),
-      'trangthai': new FormControl(''),
+      'noidung': new FormControl('', [Validators.required, Validators.pattern("^((\\+91-?)|0)?[0-9]{10}$")]),
+      'id': new FormControl('', []),
+    
     });
   }
+ 
   get tieude() {
     return this.formTT.get('tieude')!;
   }
   get noidung() {
-    return this.formTT.get('matkhau')!;
+    return this.formTT.get('noidung')!;
   }
   get trangthai() {
     return this.formTT.get('trangthai')!;
@@ -91,36 +96,29 @@ export class NewComponent implements OnInit {
           console.error("No file selected.");
         }
 
-
+      }
+      onEditorReady(event: any) {
+        this.ckEditorInstance = event.editor;
+       const textContent = this.ckEditorInstance.getData();
 
       }
-  
-  // onFileSelected(event: any) {
-  //   const file: File = event.target.files[0];
-  //   console.log(file);
-  //   this.apisv.uploadFiles(file).subscribe(
-  //     response => {
-  //       // Xử lý kết quả thành công
-  //       console.log('Upload thành công:', response);
-  //     },
-  //     error => {
-  //       // Xử lý lỗi nếu có
-  //       console.log('Lỗi upload:', error);
-  //     }
-  //   );
-  // }
-
+    
   add_Product(item:any){
     this.image = document.getElementById('files');
     let currd = new Date();
     // const inputDate: string = (document.getElementById("date") as HTMLInputElement).value; 
     // const formattedDate = moment(inputDate, "YYYY-MM-DD");
-    let obj ={
-        "idbaiviet": 0,
+    // Truy cập đến CKEditor thông qua CKEditorComponent
+
+
+// Sử dụng câu lệnh để lấy nội dung văn bản
+const textContent = htmlToText(item.noidung);
+     let obj ={
+        "idbaiviet": item.id,
         "iduser": 0,
         "anh": this.selectedFile?.name,
         "tieude": item.tieude,
-        "noidung": item.noidung,
+        "noidung": textContent,
         "ngaydangbai": currd,
     }
     console.log(obj);
@@ -134,50 +132,31 @@ export class NewComponent implements OnInit {
       this.api.put(this.host+'/update_baiviet',obj).subscribe(data => {
         this.get();
        this.active = true;
+       this.title= "CẬP NHẬT";
        this.add_succes=false
        setTimeout(()=>{this.add_succes=true;},2000);})
     }
   }
   ShowModal(item:any){
     this.active= false;
-    this.api.get(this.host+'/get_acc_byid?id='+item).subscribe(data=>{
+    this.api.get(this.host+'/getbv_by_id?id='+item.idbaiviet).subscribe(data=>{
       this.getid = data;
       this.formTT = this.fb.group({
-        // id:   [this.getproduct_id.maTaiKhoan,Validators.required],
-        // taikhoan:   [this.getproduct_id.taiKhoan,Validators.required],
-        // matKhau:         [this.getproduct_id.matKhau,Validators.required],
-        // loaiquyen: [this.getproduct_id.loaiQuyen,Validators.required],
-        // trangthai: [this.getproduct_id.trangThai,Validators.required],
+        id:   [this.getid.idbaiviet,Validators.required],
+        tieude:   [this.getid.tieude,Validators.required],
+        noidung:         [this.getid.noidung,Validators.required],
 
       });
       
     });
   }
-  // public upload(event: any) {
-  //   if (event.target.files && event.target.files.length > 0) {
-  //     this.file = event.target.files[0];
-  //     this.apisv.uploadFileSingle('/api/upload/upload', 'sanpham', this.file).subscribe((res: any) => {
-  //     });
-  //   }
-  // }
-  update_Product(item:any){
-    this.image = document.getElementById('files');
-    let obj ={
-      id :item.id,
-      tenPhong: item.tenPhong,
-      idloaiPhong: 1,
-      anh :this.image.files[0].name,
-      dongia : Number(item.dongia),
-      trangthai: true,
-      
-      }
-    console.log(obj);
-   
-  }
+ 
+  
   DeleteProduct(item:any){
     if(confirm('bạn có muốn xóa bài viết'+item.tieude)){
-      this.api.delete(this.host+'/Delete_baiviet?id='+item.id).subscribe(data => {
+      this.api.delete(this.host+'/Delete_baiviet?id='+item.idbaiviet).subscribe(data => {
         this.delete_succes=false;
+        console.log(item.id);
         setTimeout(() => {this.delete_succes=true},2000);
         this.get();
        })
@@ -197,13 +176,11 @@ export class NewComponent implements OnInit {
   }
   Show(value:any){
       this.active=false;
+      this.iscreated = true;
       this.formTT = this.fb.group({
         tieude   : [''],
-        noidung:         [''],
-        loaiquyen: [''],
-        trangthai:    [''],
-        txt_soluong: [''],
-    
+        noidung:   [''],
+        
       });
   }
   get():void{
@@ -216,8 +193,9 @@ export class NewComponent implements OnInit {
   search(){
     let name = (<HTMLInputElement>document.getElementById('searchs')).value;
     console.log(name);
-    this.api.get(this.host+'/Search_LoaiHomstay?name='+name).subscribe(data=>{
+    this.api.get(this.host+'/Search_baiviet?name='+name).subscribe(data=>{
       this.product = data;
+      console.log(this.product);
     });
   }
   filter(event:any){
@@ -236,8 +214,5 @@ export class NewComponent implements OnInit {
 
 
 
-  
-function moment(inputDate: string, arg1: string) {
-  throw new Error('Function not implemented.');
-}
+
 

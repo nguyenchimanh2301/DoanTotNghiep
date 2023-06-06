@@ -158,6 +158,123 @@ export class OrderComponent implements OnInit {
 // document.body.removeChild(a);
 // window.URL.revokeObjectURL(url);
 //   }
+public printHtml() {
+  let html_order = '';
+    html_order += `
+    <tr>
+    <td>${ this.detail_order.tenKh}</td>
+    <td>${ this.detail_order.email}</td>
+    <td>${ this.detail_order.sdt}</td>
+    </tr>
+    `;
+
+  let data = `
+  <section style="text-align: center;">
+      <h1>HÓA ĐƠN </h1>
+      <div class="ban">(Đơn đặt phòng)</div>
+      <div class="ngay">
+          <p id="date"></p>
+          <script>
+              n = new Date();
+              y = n.getFullYear();
+              m = n.getMonth() + 1;
+              d = n.getDate();
+              document.getElementById("date").innerHTML = "Ngày " + d + " tháng " + m + " năm " + y;
+          </script>
+      </div>
+  </section>
+
+  <div class="le dam">Quản lý homestay</div>
+  <div class="le">Địa chỉ: Song Mai- Kim Động - Hưng Yên </div>
+  <div class="le doi">Điện thoại: 0566211950</div>
+  <div class="le doi">Số tài khoản: 180720019999</div>
+  
+  <table>
+      <tr>
+      <th>TenKH</th>
+      <th>diachi</th>
+      <th>sdt</th>
+          <th>Tên phòng đặt</th>
+          <th>Đơn giá</th>
+          <th>Thời gian thuê</th>
+          <th>Thành tiền</th>
+      </tr>
+      ${html_order}
+  </table>
+  <div class="doi dam ky">Người đặt </div>
+  <div class="doi dam ky">Người cho thuê</div>
+  <div class="doi ky1">(Ký, ghi rõ họ tên)</div>
+  <div class="doi ky1">(Ký, ghi rõ họ tên)</div>
+  `;
+
+  let popupWin: any = window.open(
+    '',
+    '_top',
+    'top=0,left=0,height=100%,width=auto'
+  );
+  popupWin.document.write(`
+    <html>
+      <head>
+        <title>Print tab</title>
+        <style>
+        .print table {
+            margin-top: 15px;
+            width: 100%;
+        }
+        print tr {
+            line-height: 27px;
+        }
+
+        .print table,
+        th,
+        td {
+            border: 1px solid black;
+            border-collapse: collapse;
+            text-align: center;
+        }
+
+        .print .ngay {
+            font-style: italic;
+            font-size: 15px;
+            margin-bottom: 5px;
+        }
+
+        .print .ban {
+            font-style: italic;
+            font-size: 15px;
+            margin: 3px 0px;
+        }
+
+        .print .dam {
+            font-weight: bold;
+        }
+
+        .print .le {
+            margin-bottom: 4px;
+            font-size: 15px;
+        }
+
+        .print .doi {
+            width: 50%;
+            float: left;
+        }
+
+        .print .ky {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .print .ky1 {
+            font-style: italic;
+            text-align: center;
+            margin-top: 5px;
+        }
+    </style>
+      </head>
+    <body class='print' onload="window.print();window.close()">${data}</body>
+    </html>`);
+  popupWin.document.close();
+}
   onSubmit() {
     this.htmlContent = this.panelBody.nativeElement.innerHTML;
     const textContent = htmlToText(this.htmlContent);

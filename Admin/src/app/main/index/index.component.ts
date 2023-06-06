@@ -18,7 +18,9 @@ export class IndexComponent implements OnInit {
   public countkh:any;
   public countdh:any;
   public counttt:any =0;
-
+  selectedDate: string = '';
+  selectedMonth: number = 0;
+  selectedYear: number = 0;
   constructor(private api:HttpClient) { }
 
   ngOnInit(): void {
@@ -46,5 +48,27 @@ export class IndexComponent implements OnInit {
         });
         });     
   }
-
+  //code logic
+   calculateTotal(): number {
+      const filteredInvoices = this.sum.filter((invoice:any) => {
+        const invoiceDate = new Date(invoice.ngaygd);
+        const selectedDate = new Date(this.selectedDate);
+        // So sánh ngày bằng cách so sánh năm, tháng và ngày
+        return (
+          invoiceDate.getFullYear() === selectedDate.getFullYear() &&
+          invoiceDate.getMonth() === selectedDate.getMonth() &&
+          invoiceDate.getDate() === selectedDate.getDate()
+        );
+      });
+      return filteredInvoices.reduce((total:any, invoice:any) => total + invoice.gia, 0);
+    }
+    calculateTotal1(): number {
+      const filteredInvoices = this.order.filter((invoice:any)=> {
+        const invoiceDate = new Date(invoice.ngaygd);
+        return invoiceDate.getMonth() + 1 === this.selectedMonth && invoiceDate.getFullYear() === this.selectedYear;
+      });
+      return filteredInvoices.reduce((total:any, invoice:any) => total + invoice.gia, 0);
+    }
+    //luu í:
+    
 }
