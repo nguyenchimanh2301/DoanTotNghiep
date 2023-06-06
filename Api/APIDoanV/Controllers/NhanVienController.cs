@@ -2,7 +2,6 @@ using Microsoft.AspNetCore.Mvc;
 using APIDoanV.Model;
 using Microsoft.EntityFrameworkCore;
 using System.Net.Http;
-using System.Web.Http;
 namespace APIDoanV.Controllers
 {
   [ApiController]

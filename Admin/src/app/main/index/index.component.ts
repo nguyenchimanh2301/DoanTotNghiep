@@ -42,7 +42,6 @@ export class IndexComponent implements OnInit {
         console.log(this.sum);
         console.log(this.counttt);
          this.sum.forEach((element:any) => {
-          console.log(element.dongia);
           this.counttt += element.dongia;
         });
         });     

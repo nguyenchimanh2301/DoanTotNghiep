@@ -17,9 +17,10 @@ import { SellComponent } from './sell/sell.component';
 import { DetailbillComponent } from './detailbill/detailbill.component';
 import { AccountComponent } from './account/account.component';
 import { NewComponent } from './new/new.component';
+import { EmployeeComponent } from './employee/employee.component';
 @NgModule({
     declarations:
-     [MainComponent, IndexComponent, ProductComponent, CategoryComponent, OrderComponent, CustomerComponent, SellComponent, DetailbillComponent, AccountComponent, NewComponent],
+     [MainComponent, IndexComponent, ProductComponent, CategoryComponent, OrderComponent, CustomerComponent, SellComponent, DetailbillComponent, AccountComponent, NewComponent, EmployeeComponent],
     imports: [
         CommonModule,
         SharedModule,
@@ -27,7 +28,8 @@ import { NewComponent } from './new/new.component';
         NgxPaginationModule,
         FormsModule,
         ReactiveFormsModule,
-        CKEditorModule
+        CKEditorModule,
+        
     ]
 })
 export class MainModule { }

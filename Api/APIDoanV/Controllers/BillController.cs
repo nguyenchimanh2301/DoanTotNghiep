@@ -38,10 +38,10 @@ namespace APIDoanV.Controllers
         [HttpGet]
         public IActionResult Getall_cthd(int madon)
         {
-            var result = (from t in db.DatPhongs join p in db.ChitietDatPhongs.Where(x=>x.Iddondat==madon) on t.Id equals p.Iddondat
-                          join n in db.Phongs on p.Idp equals n.Id
-                          select new { t.Id,n.TenPhong,p.Tongthoigiandat,p.Dongia,p.Thanhtien})
-                        .ToList();
+            var result = (from kh in db.KhachHangs join  t in db.DatPhongs on kh.Id equals t.Idkh join p in db.ChitietDatPhongs.Where(x=>x.Iddondat==madon) on t.Id equals p.Iddondat
+                          join n in db.Phongs on p.Idp equals n.Id join ct in db.LoaiPhongs on n.IdloaiPhong equals ct.Id
+                          select new { t.Id,kh.TenKh,kh.DiaChi,kh.Email,kh.Sdt,n.TenPhong,t.Ngaydat,t.Ngaytra,p.Tongthoigiandat,p.Dongia,ct.TenLoaiPhong})
+                        .FirstOrDefault();
   
 
             return Json(result);

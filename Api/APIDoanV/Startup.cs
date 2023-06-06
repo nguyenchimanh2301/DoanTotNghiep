@@ -1,11 +1,13 @@
 
 using APIDoanV.helper;
+using APIDoanV.Model;
 using APIDoanV.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -52,6 +54,9 @@ namespace API
             // configure strongly typed settings objects
             var appSettingsSection = Configuration.GetSection("AppSettings");
             services.Configure<AppSettings>(appSettingsSection);
+            services.AddDbContext<QuanlyhomestayContext>(options =>
+          options.UseSqlServer("Server=LAPTOP-LLHPT87U\\SQLEXPRESS;Database=QUANLYHOMESTAY;Trusted_Connection=True;Encrypt=False",
+        sqlServerOptions => sqlServerOptions.EnableRetryOnFailure()));
 
             // configure jwt authentication
             var appSettings = appSettingsSection.Get<AppSettings>();
@@ -82,8 +87,8 @@ namespace API
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             app.UseRouting();
+
             // global cors policy
-            app.UseCors("AllowOrigin");
             app.UseCors(x => x
                 .AllowAnyOrigin()
                 .AllowAnyMethod()
@@ -96,7 +101,9 @@ namespace API
                 endpoints.MapControllers();
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "vidu2 v1"));
+          
             });
+
         }
     }
 }

@@ -125,10 +125,10 @@ namespace APIDoanV.Controllers
     }
     [Route("Search_Homstay")]
     [HttpGet]
-    public IActionResult Search(string? name,int? idloai)
+    public IActionResult Search(string? name,int? idloai,int? gia)
     {
 
-      if (name==null && idloai==null)
+      if (name==null && idloai==null && gia == 0)
       {
         var obj = (from sp in db.Phongs
                    join
@@ -145,7 +145,7 @@ namespace APIDoanV.Controllers
                    });
         return Json(obj);
       }
-      else if (name == null && idloai != null)
+      else if (name == null && idloai != null && gia==0)
             {
                 var obj = (from sp in db.Phongs
                            join
@@ -162,7 +162,24 @@ namespace APIDoanV.Controllers
                            }).Where(x =>x.IdloaiPhong == idloai);
                 return Json(obj);
             }
-            else if (name != null && idloai == null)
+            else if (name == null && idloai == null && gia>0)
+            {
+                var obj = (from sp in db.Phongs
+                           join
+                 l in db.LoaiPhongs on sp.IdloaiPhong equals l.Id
+                           select new
+                           {
+                               sp.Id,
+                               l.TenLoaiPhong,
+                               sp.IdloaiPhong,
+                               sp.TenPhong,
+                               sp.Anh,
+                               sp.Dongia,
+                               sp.Trangthai
+                           }).Where(x => x.Dongia <= gia);
+                return Json(obj);
+            }
+            else if (name != null && idloai == null && gia==0)
             {
                 var obj = (from sp in db.Phongs
                            join
@@ -179,9 +196,43 @@ namespace APIDoanV.Controllers
                            }).Where(x=>x.TenPhong.ToLower().Contains(name.ToLower()));
                 return Json(obj);
             }
+            else if (name != null && idloai == null && gia > 0)
+            {
+                var obj = (from sp in db.Phongs
+                           join
+                 l in db.LoaiPhongs on sp.IdloaiPhong equals l.Id
+                           select new
+                           {
+                               sp.Id,
+                               l.TenLoaiPhong,
+                               sp.IdloaiPhong,
+                               sp.TenPhong,
+                               sp.Anh,
+                               sp.Dongia,
+                               sp.Trangthai
+                           }).Where(x => x.TenPhong.ToLower().Contains(name.ToLower()) && x.Dongia <= gia);
+                return Json(obj);
+            }
+            else if (name != null && idloai != null && gia == 0)
+            {
+                var obj = (from sp in db.Phongs
+                           join
+                 l in db.LoaiPhongs on sp.IdloaiPhong equals l.Id
+                           select new
+                           {
+                               sp.Id,
+                               l.TenLoaiPhong,
+                               sp.IdloaiPhong,
+                               sp.TenPhong,
+                               sp.Anh,
+                               sp.Dongia,
+                               sp.Trangthai
+                           }).Where(x => x.TenPhong.ToLower().Contains(name.ToLower()) && x.IdloaiPhong == idloai );
+                return Json(obj);
+            }
             else
-        {
-          var obj = (from sp in db.Phongs
+            {
+           var obj = (from sp in db.Phongs
                      join
                 l in db.LoaiPhongs on sp.IdloaiPhong equals l.Id
                      select new
@@ -193,8 +244,8 @@ namespace APIDoanV.Controllers
                        sp.Anh,
                        sp.Dongia,
                        sp.Trangthai
-                     }).Where(x => x.TenPhong.ToLower().Contains(name.ToLower()) && x.IdloaiPhong==idloai);
-          return Json(obj);
+                     }).Where(x => x.TenPhong.ToLower().Contains(name.ToLower()) && x.IdloaiPhong==idloai && x.Dongia<=gia);
+                  return Json(obj);
 
         }
 

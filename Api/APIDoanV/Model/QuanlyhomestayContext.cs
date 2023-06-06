@@ -94,9 +94,10 @@ public partial class QuanlyhomestayContext : DbContext
 
             entity.ToTable("Baiviet");
 
-            entity.Property(e => e.Idbaiviet)
-                .ValueGeneratedNever()
-                .HasColumnName("idbaiviet");
+            entity.Property(e => e.Idbaiviet).HasColumnName("idbaiviet");
+            entity.Property(e => e.Anh)
+                .HasMaxLength(50)
+                .IsUnicode(false);
             entity.Property(e => e.Iduser).HasColumnName("iduser");
             entity.Property(e => e.Ngaydangbai)
                 .HasDefaultValueSql("(getdate())")

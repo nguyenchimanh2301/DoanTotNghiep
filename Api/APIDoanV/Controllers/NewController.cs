@@ -16,6 +16,7 @@ namespace APIDoanV.Controllers
             {
                  sp.Idbaiviet,
                  sp.Iduser,
+                 sp.Anh,
                  sp.Tieude,
                 sp.Noidung,
                 sp.Ngaydangbai,

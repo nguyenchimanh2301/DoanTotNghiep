@@ -7,7 +7,7 @@
      -->
     <div class="success-msg" [hidden]="add_succes">
       <i class="fa fa-check"></i>
-     THÊM THÀNH CÔNG
+    {{title}} THÀNH CÔNG
     </div>
     
      <!--<div class="warning-msg" [hidden]="add_succes">
@@ -37,7 +37,7 @@
            <label for="">Loại homestay</label>
            <select class="custom-select" name="" id="" (change)="filter($any($event))" >
               <option value="0">Tất cả</option>
-             <option  *ngFor="let item of category" value="{{item.id}}">{{item.tenloai}}</option>
+             <option  *ngFor="let item of category" value={{item.id}}>{{item.tenloai}}</option>
            </select>
           </div>
      </div>
@@ -63,13 +63,12 @@
  
  
 
-
     <div class="modal-contain" [hidden]="active">
-      <form [formGroup]="formAC" (submit)="add_Product(formAC.value)">
+      <form [formGroup]="formTT" (submit)="add_Product(formTT.value)">
         <div class="modal-lg" role="document">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title">THÊM HOMESTAY</h5>
+              <h5 class="modal-title">{{title}} TIN TỨC</h5>
               <button
                 type="button"
                 class="close"
@@ -82,82 +81,43 @@
             </div>
   
             <div class="modal-body">
-              <div class="form-group" id="group-form" >
-                <!-- <div style="display: none;">
-                  <label for="">Tên homestay </label> <span>*</span>
-                  <input type="text" class="form-control" name="" id="" aria-describedby="helpId" placeholder="" formControlName="idsp"    >
-                </div> -->
-                <div class=" col-md-8">
-                  <label for="">Tên tài khoản</label> <span>*</span>
-                  <span *ngIf="taiKhoan?.invalid && (taiKhoan.dirty || taiKhoan.touched)">
-                    <span *ngIf="taiKhoan.errors?.['required']"
-                      >Tên sản phẩm không được rỗng</span></span>
-                  <input type="text" class="form-control" name="" id="" aria-describedby="helpId" placeholder="" formControlName="taikhoan"  >
+              <div class="form-group" id="group-form">
+                <div style="display: none;">
+                  <label for=""> </label> <span>*</span>
+                  <input type="text" class="form-control" name="" id="" aria-describedby="helpId" placeholder="" formControlName="id"    >
                 </div>
-                <div class=" col-md-8">
-                  <label for="">Mật khẩu</label> <span>*</span>
-                  <span *ngIf="matKhau?.invalid && (matKhau.dirty || matKhau.touched)">
-                    <span *ngIf="matKhau.errors?.['required']"
-                      >Tên sản phẩm không được rỗng</span></span>
-                  <input type="text" class="form-control" name="" id="" aria-describedby="helpId" placeholder="" formControlName="matkhau"    >
+                <div class=" col-md-5">
+                  <label for="">Tiêu đề bài viết </label> <span>*</span>
+                  <span *ngIf="tieude.invalid && (tieude.dirty || tieude.touched)">
+                    <span *ngIf="tieude.errors?.['required']"
+                      >Tiêu đề không được rỗng</span></span>
+                  <input type="text" class="form-control" name="" id="" aria-describedby="helpId" placeholder="" formControlName="tieude"    >
                 </div>
-                <div class="col-md-5">
+                <!-- <div class="col-md-5">
                      <div class="form-group">
-                      <label for="">Loại quyền</label>
-                      <select class="custom-select" name="" id="" formControlName="loaiquyen">
-                        <option>Admin</option>
-                        <option>Nhân viên</option>
+                      <label for="">Loại homestay</label>
+                      <select class="custom-select" name="" id="" formControlName="lsp" [(ngModel)]="selectedOption">
+                        <option  *ngFor="let item of category" value={{item.id}}>{{item.tenloai}}</option>
                       </select>
                      </div>
-                </div>
-                <div class="col-md-8">
-                    <div class="form-group">
-                     <label for="">Trạng thái</label>
-                     <select class="custom-select" name="" id="" formControlName="trangthai">
-                       <option  *ngFor="let item of status" value={{item.status}}>{{item.name}}</option>
-                     </select>
-                    </div>
-               </div>
-               <!-- <div class="col-md-8">
-                    <div class="form-group">
-                     <label for="">Ngày kết thúc</label>
-                     <input type="date" class="form-control" name="" id="" aria-describedby="helpId" placeholder="" formControlName="ngaykethuc"    >
-
-                    </div>
-               </div> -->
+                </div> -->
               </div> 
-              <!-- <div class="form-group">
-                  <label for="">Giá tiền*</label>
-                  <span *ngIf="giatien.invalid && (giatien.dirty || giatien.touched)">
-                    <span *ngIf="giatien.errors?.['required']">Số tiền không được rỗng</span>
-                    <span *ngIf="giatien.errors?.['pattern']">Số tiền phải là số</span>
-                </span>
-                  <input type="text" class="form-control" name="" id="" aria-describedby="helpId" placeholder="" formControlName="dongia" >
-                </div>  -->
-                <!-- <div class="form-group">
+                <div class="form-group">
                   <label for="">Mô tả</label>
-                  <ckeditor formControlName="txt_mota" [editor]="Editor"></ckeditor>
-                </div>  -->
+                  <ckeditor formControlName="noidung" [editor]="Editor"></ckeditor>
+                </div> 
                 <!-- <div class="form-group">
                     <label for="">Số lượng</label>
                     <input type="text" class="form-control" name="" id="" aria-describedby="helpId" placeholder="" formControlName="txt_soluong" >
-                </div>  -->
-                <!-- <div class="form-group">
-                    <label for="">Ảnh Đại diện</label>
-                    <input type="file" 
-                    class="form-control" name="" id="files" aria-describedby="helpId" placeholder="" >
-                </div>  -->
+                  </div>  -->
+                  <div class="form-group">
+                    <label for="">Ảnh</label>
+                    <input type="file" (change)="onFileSelected($any($event))">
+                  </div> 
                  
                 
             </div>
             <div class="modal-footer">
-              <button
-                class="btn btn-secondary"
-                data-dismiss="modal"
-                (click)="close()"
-              >
-                Close
-              </button>
               <button type="submit" class="btn btn-primary">Save</button>
             </div>
           </div>
@@ -172,13 +132,13 @@
       <thead>
         <tr>
           <th style="width: 50px">STT</th>
-          <!-- <th>Ảnh</th> -->
-          <th>Tên tài khoản</th>
-          <th>Mật khẩu</th>
-          <th>loại quyền</th>
-          <th>Trạng thái</th>
-          <th>Ngày bắt đầu</th>
-          <th>Ngày kết thúc</th>
+          <th>Ảnh</th>
+          <th>Tiêu đề</th>
+          <th>Nội dung</th>
+          <th>Ngày đăng bài</th>
+          <!-- <th>Trạng thái</th> -->
+          <!-- <th>Ngày sản xuất</th>
+          <th>Hạn sử dụng</th> -->
           <th>Chức năng</th>
         </tr>
       </thead>
@@ -195,19 +155,14 @@
           "
         >
           <td>{{ i + 1 }}</td>
-          <input type="file" (change)="onFileSelected($any($event))">
-          <button (click)="uploadFile()">Upload</button>
-          <!-- <td><img src="/assets/Homestay/{{ item.anh }}" alt="" style="width: 100px;height: 100px; border-radius: 5px ;"></td> -->
-          <!-- <td style="width: 300px;">{{ item.tenPhong}}</td> -->
-          <!-- <td>{{ item.taiKhoan}}</td>
-          <td>{{ item.matKhau}}</td>
-          <td>{{ item.loaiQuyen}}</td>
-          <td>{{ item.trangthai==true?"Hoạt động":"Offline"}}</td>
-          <td>{{ item.ngayBatDau|date:'dd/MM/yy HH:mm:ss'}}</td>
-          <td>{{ item.ngayKetThuc|date:'dd/MM/yy HH:mm:ss'}}</td> -->
+          <td><img src="/assets/tintuc/{{ item.anh }}" alt="" style="width: 100px;height: 100px; border-radius: 5px ;"></td>
+          <td style="width: 300px;">{{ item.tieude}}</td>
+          <td style="width: 300px;">{{ item.noidung}}</td>
+          <td>{{ item.ngaydangbai|date:'dd/MM/yy'}}</td>
+         <!--  <td>{{ item.hanSudung|date:'dd/MM/yy'}}</td> -->
           <td id="icon_admin">
-            <button (click)="DeleteProduct(item.maTaiKhoan)" type="button" class="btn btn-danger"><i class="fa fa-trash" aria-hidden="true" ></i></button>
-            <button (click)="ShowModal(item.maTaiKhoan)" type="button" class="btn btn-warning"><i class="fa fa-edit" aria-hidden="true"></i></button>
+            <button (click)="DeleteProduct(item)" type="button" class="btn btn-danger"><i class="fa fa-trash" aria-hidden="true" ></i></button>
+            <button (click)="ShowModal(item)" type="button" class="btn btn-warning"><i class="fa fa-edit" aria-hidden="true"></i></button>
           </td>
         </tr>
       </tbody>
@@ -240,7 +195,6 @@
 </button> -->
 
 <!-- Modal -->
-
 
 
 

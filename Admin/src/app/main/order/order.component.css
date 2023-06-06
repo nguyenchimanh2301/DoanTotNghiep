@@ -362,9 +362,47 @@ body{margin-top:20px;
 #close{
     width: 30px;
     height: 30px;
+    float: right;
 }
 #close i{
    color: black;
    font-size: 30px;
    margin-bottom: 5px;
-}
+}.containers {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+  }
+  
+  h1 {
+    text-align: center;
+  }
+  
+  .bill-details {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+  }
+  
+  .room-details,
+  .guest-details {
+    flex-basis: 48%;
+  }
+  
+  .payment-details {
+    margin-top: 20px;
+  }
+  
+  h2 {
+    font-size: 1.2em;
+    margin-top: 0;
+  }
+  
+  p {
+    margin-top: 5px;
+  }
+  
+  .footer{
+    float: right;
+  }

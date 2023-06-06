@@ -9,6 +9,8 @@ public partial class Baiviet
 
     public int Iduser { get; set; }
 
+    public string? Anh { get; set; }
+
     public string? Tieude { get; set; }
 
     public string? Noidung { get; set; }
