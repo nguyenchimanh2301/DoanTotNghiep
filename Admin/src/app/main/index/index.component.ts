@@ -2,11 +2,13 @@ import { map } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { environment } from 'src/environments/environment';
+import { DecimalPipe } from '@angular/common';
 
 @Component({
   selector: 'app-index',
   templateUrl: './index.component.html',
   styleUrls: ['./index.component.css']
+  
 })
 export class IndexComponent implements OnInit {
   public host = environment.BASE_API;
@@ -21,7 +23,8 @@ export class IndexComponent implements OnInit {
   selectedDate: string = '';
   selectedMonth: number = 0;
   selectedYear: number = 0;
-  constructor(private api:HttpClient) { }
+  
+  constructor(private api:HttpClient,private decimalPipe: DecimalPipe) { }
 
   ngOnInit(): void {
     this.api.get(this.host+'/get_all_homestay').subscribe(data=>{
@@ -49,26 +52,71 @@ export class IndexComponent implements OnInit {
         });     
   }
   //code logic
-   calculateTotal(): number {
-      const filteredInvoices = this.sum.filter((invoice:any) => {
-        const invoiceDate = new Date(invoice.ngaygd);
-        const selectedDate = new Date(this.selectedDate);
-        // So sánh ngày bằng cách so sánh năm, tháng và ngày
-        return (
-          invoiceDate.getFullYear() === selectedDate.getFullYear() &&
-          invoiceDate.getMonth() === selectedDate.getMonth() &&
-          invoiceDate.getDate() === selectedDate.getDate()
-        );
+  calculateTotal(): string {
+    const filteredInvoices = this.order.filter((invoice: any) => {
+      const invoiceDate = new Date(invoice.ngaytra);
+      const selectedDate = new Date(this.selectedDate);
+      // So sánh ngày bằng cách so sánh năm, tháng và ngày
+      return (
+        invoiceDate.getFullYear() === selectedDate.getFullYear() &&
+        invoiceDate.getMonth() === selectedDate.getMonth() &&
+        invoiceDate.getDate() <= selectedDate.getDate()
+      );
+    });
+  
+    const totalAmount = filteredInvoices.reduce((total: number, invoice: any) => {
+      console.log(invoice.thanhtien);
+      const numbers = invoice.thanhtien.split(/\s+/); // Tách chuỗi thành mảng các số bằng khoảng trắng
+      const validNumbers = numbers.filter((num: any) => !isNaN(parseFloat(num))); // Lọc bỏ các giá trị không phải số
+      validNumbers.forEach((num: any) => {
+        total += parseFloat(num);
       });
-      return filteredInvoices.reduce((total:any, invoice:any) => total + invoice.gia, 0);
-    }
-    calculateTotal1(): number {
-      const filteredInvoices = this.order.filter((invoice:any)=> {
-        const invoiceDate = new Date(invoice.ngaygd);
-        return invoiceDate.getMonth() + 1 === this.selectedMonth && invoiceDate.getFullYear() === this.selectedYear;
+      return total;
+    }, 0);
+  
+    return totalAmount;
+  
+    // Định dạng totalAmount bằng DecimalPipe
+    
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  calculateTotal1(): number {
+    const filteredInvoices = this.order.filter((invoice: any) => {
+      const invoiceDate = new Date(invoice.ngaydat);
+      return (
+        invoiceDate.getMonth() + 1 === this.selectedMonth &&
+        invoiceDate.getFullYear() === this.selectedYear
+      );
+    });
+  
+    const totalAmount = filteredInvoices.reduce((total: number, invoice: any) => {
+      console.log(invoice.thanhtien);
+      const numbers = invoice.thanhtien.split(/\s+/); // Tách chuỗi thành mảng các số bằng khoảng trắng
+      const validNumbers = numbers.filter((num: any) => !isNaN(parseFloat(num))); // Lọc bỏ các giá trị không phải số
+      validNumbers.forEach((num: any) => {
+        total += parseFloat(num);
       });
-      return filteredInvoices.reduce((total:any, invoice:any) => total + invoice.gia, 0);
-    }
+      return total;
+    }, 0);
+  
+    return totalAmount;
+  }
+  
     //luu í:
     
 }

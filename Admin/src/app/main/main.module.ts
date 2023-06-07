@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DecimalPipe } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { SharedModule } from '../shared/shared.module';
 import { MainRoutes } from './main.routes';
@@ -30,6 +30,7 @@ import { EmployeeComponent } from './employee/employee.component';
         ReactiveFormsModule,
         CKEditorModule,
         
-    ]
+    ],
+    providers: [DecimalPipe],
 })
 export class MainModule { }

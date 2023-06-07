@@ -71,8 +71,7 @@ export class OrderComponent implements OnInit {
         <h2>Thông tin phòng</h2>
         <p>Tên phòng: ${this.detail_order.tenPhong}</p>
         <p>Loại phòng:${this.detail_order.tenLoaiPhong}</p>
-        <p>Ngày đặt:${formattedDate}</p>
-        <p>Ngày trả:${formattedDate2}</p>
+        
       </div>
       <div class="guest-details">
         <h2>Thông tin khách hàng</h2>
@@ -159,15 +158,25 @@ export class OrderComponent implements OnInit {
 // window.URL.revokeObjectURL(url);
 //   }
 public printHtml() {
+  const formattedDate = new Date(this.detail_order.ngaydat).toLocaleString('vi-VN', { 
+    dateStyle: 'short',
+    timeStyle: 'short'
+  });
+  const formattedDate2 = new Date(this.detail_order.ngaytra).toLocaleString('vi-VN', { 
+    dateStyle: 'short',
+    timeStyle: 'short'
+  });
   let html_order = '';
     html_order += `
     <tr>
     <td>${ this.detail_order.tenKh}</td>
-    <td>${ this.detail_order.email}</td>
+    <td>${ this.detail_order.diaChi}</td>
     <td>${ this.detail_order.sdt}</td>
+    <td>${ this.detail_order.tenPhong}</td>
+    <td>${ this.detail_order.dongia}</td>
+    <td>${ this.detail_order.tongthoigiandat*this.detail_order.dongia}</td>
     </tr>
     `;
-
   let data = `
   <section style="text-align: center;">
       <h1>HÓA ĐƠN </h1>
@@ -188,7 +197,8 @@ public printHtml() {
   <div class="le">Địa chỉ: Song Mai- Kim Động - Hưng Yên </div>
   <div class="le doi">Điện thoại: 0566211950</div>
   <div class="le doi">Số tài khoản: 180720019999</div>
-  
+  <div class="le doi">Ngày đặt: ${formattedDate}</div>
+  <div class="le doi">Ngày trả: ${formattedDate}</div>
   <table>
       <tr>
       <th>TenKH</th>
@@ -196,7 +206,6 @@ public printHtml() {
       <th>sdt</th>
           <th>Tên phòng đặt</th>
           <th>Đơn giá</th>
-          <th>Thời gian thuê</th>
           <th>Thành tiền</th>
       </tr>
       ${html_order}

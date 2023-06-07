@@ -43,7 +43,6 @@
                   <input type="number" [(ngModel)]="selectedYear">
                   </td>
                   <td>
-                    {{ calculateTotal1()|number:'' }}đ
                   </td>
                 </tbody>
               </table>
@@ -110,7 +109,7 @@
           <div class="card card-light-danger">
             <div class="card-body">
               <p class="mb-4" >Tổng doanh thu</p>
-              <p class="fs-30 mb-2">{{counttt|currency:"VND"}}VNĐ</p>
+              <p class="fs-30 mb-2">{{ calculateTotal1()|number:'' }}đ</p>
               <p>0.22% (30 days)</p>
             </div>
           </div>
