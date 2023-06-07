@@ -103,5 +103,29 @@ namespace APIDoanV.Controllers
                 throw e;
             }
         }
+        [Route("dangki")]
+        [HttpPost]
+        public IActionResult CreateBill([FromBody] DangKi model)
+        {
+            db.KhachHangs.Add(model.kh);
+            db.SaveChanges();
+            int MaKhachHang = model.kh.Id;
+            model.ac.Idkh = MaKhachHang;
+            model.ac.LoaiQuyen = "user";
+            model.ac.TrangThai = false;
+            model.ac.IdkhNavigation = null;
+            // Xóa navigation property trước khi thêm vào cơ sở dữ liệu
+            db.Accounts.Add(model.ac);
+            db.SaveChanges();
+
+            return Ok(new { data = "OK" });
+        }
     }
+
+    public class DangKi 
+    {
+        public KhachHang kh { get; set; }
+        public Account ac { get; set; }
+    }
+
 }

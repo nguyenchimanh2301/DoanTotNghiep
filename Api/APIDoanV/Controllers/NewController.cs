@@ -31,6 +31,7 @@ namespace APIDoanV.Controllers
             {
                 sp.Idbaiviet,
                 sp.Iduser,
+                sp.Anh,
                 sp.Tieude,
                 sp.Noidung,
                 sp.Ngaydangbai,
@@ -97,9 +98,10 @@ namespace APIDoanV.Controllers
                 {
                     sp.Idbaiviet,
                     sp.Iduser,
+                    sp.Anh,
                     sp.Tieude,
                     sp.Noidung,
-                    sp.Ngaydangbai
+                    sp.Ngaydangbai,
                 }).ToList();
                 return Json(obj);
             }
@@ -109,9 +111,10 @@ namespace APIDoanV.Controllers
                 {
                     sp.Idbaiviet,
                     sp.Iduser,
+                    sp.Anh,
                     sp.Tieude,
                     sp.Noidung,
-                    sp.Ngaydangbai
+                    sp.Ngaydangbai,
                 }).Where(x => x.Tieude.Contains(name)).ToList();
                 return Json(obj);
 

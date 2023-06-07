@@ -29,7 +29,7 @@ namespace APIDoanV.Services
         {
             var result = from t in db.Accounts
                          join n in db.KhachHangs on t.Idkh equals n.Id
-                         select new Users { Role = t.LoaiQuyen, MaNguoiDung = n.Id.ToString(), TaiKhoan = t.TaiKhoan, HoTen = n.TenKh, MatKhau = t.MatKhau, DiaChi = n.DiaChi, DienThoai = n.Sdt, Email = n.Email };
+                         select new Users { Role = t.LoaiQuyen, MaNguoiDung = n.Id, TaiKhoan = t.TaiKhoan, HoTen = n.TenKh, MatKhau = t.MatKhau, DiaChi = n.DiaChi, DienThoai = n.Sdt, Email = n.Email };
             var user = result.SingleOrDefault(x=>x.TaiKhoan==username && x.MatKhau==pass);
             if (user ==null)
             {

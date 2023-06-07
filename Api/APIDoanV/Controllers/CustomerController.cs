@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Collections.Generic;
 using APIDoanV.Model;
-
+using Microsoft.EntityFrameworkCore;
 
 namespace APIDoanV.Controllers
 {
@@ -22,11 +22,27 @@ namespace APIDoanV.Controllers
             return Json(result);
 
         }
+        [Route("update_kh")]
+        [HttpPut]
+        public void update( KhachHang kh)
+        {
+            try
+            {
+                dbc.KhachHangs.Attach(kh);
+                dbc.Entry(kh).State = EntityState.Modified;
+                dbc.SaveChanges();
+            }
+            catch (Exception e)
+            {
+
+                throw e;
+            }
+        }
+       
         [Route("add_bill")]
         [HttpPost]
         public void postbill(DatPhong dp)
         {
-
             dbc.DatPhongs.Add(dp);
             dbc.SaveChanges();
         }
@@ -44,7 +60,20 @@ namespace APIDoanV.Controllers
             }).ToList();
             return Json(cus);
         }
-
+        [Route("get_cus_by_id")]
+        [HttpGet]
+        public IActionResult Getcusid(int id)
+        {
+            var cus = dbc.KhachHangs.Select(x => new
+            {
+                TenKh = x.TenKh,
+                Id = x.Id,
+                DiaChi = x.DiaChi,
+                Email = x.Email,
+                Sdt = x.Sdt,
+            }).FirstOrDefault(x=>x.Id==id);
+            return Json(cus);
+        }
         [Route("checkout")]
         [HttpPost]
         public IActionResult CreateBill([FromBody] CheckoutModel model)
