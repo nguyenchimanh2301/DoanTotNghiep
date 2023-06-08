@@ -9,6 +9,8 @@ public partial class Account
 
     public int Idkh { get; set; }
 
+    public string? Anh { get; set; }
+
     public string? TaiKhoan { get; set; }
 
     public string? MatKhau { get; set; }

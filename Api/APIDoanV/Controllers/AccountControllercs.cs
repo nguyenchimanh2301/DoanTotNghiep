@@ -18,7 +18,8 @@ namespace APIDoanV.Controllers
                 MaTaiKhoan = x.MaTaiKhoan,
                 TaiKhoan = x.TaiKhoan,
                 MatKhau = x.MatKhau,
-                NgayBatDau= x.NgayBatDau,
+                anh = x.Anh,
+                NgayBatDau = x.NgayBatDau,
                 NgayKetThuc = x.NgayKetThuc,
                 LoaiQuyen= x.LoaiQuyen,
                 TrangThai= x.TrangThai,
@@ -35,6 +36,8 @@ namespace APIDoanV.Controllers
                 MaTaiKhoan = x.MaTaiKhoan,
                 TaiKhoan = x.TaiKhoan,
                 MatKhau = x.MatKhau,
+                anh = x.Anh,
+
                 NgayBatDau = x.NgayBatDau,
                 NgayKetThuc = x.NgayKetThuc,
                 LoaiQuyen = x.LoaiQuyen,

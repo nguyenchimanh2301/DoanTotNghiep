@@ -34,6 +34,19 @@ namespace APIDoanV.Controllers
 
             return Json(bill);
         }
+        [Route("get_donhan_khachhang")]
+        [HttpGet]
+        public IActionResult Getall_khdh(int id)
+        {
+            var result = (from
+                          t in db.DatPhongs.Where(t => t.Idkh == id) 
+                          join p in db.ChitietDatPhongs on t.Id equals p.Iddondat
+                          join n in db.Phongs on p.Idp equals n.Id
+                          join ct in db.LoaiPhongs on n.IdloaiPhong equals ct.Id
+                          select new { t.Id, n.TenPhong, t.Ngaydat, t.Ngaytra, p.Tongthoigiandat, p.Dongia, ct.TenLoaiPhong ,t.Thanhtien})
+                         .ToList();
+            return Json(result);
+        }
         [Route("get_chitiet_hoadon")]
         [HttpGet]
         public IActionResult Getall_cthd(int madon)

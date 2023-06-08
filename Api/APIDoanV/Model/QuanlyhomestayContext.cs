@@ -69,6 +69,10 @@ public partial class QuanlyhomestayContext : DbContext
 
             entity.ToTable("account");
 
+            entity.Property(e => e.Anh)
+                .HasMaxLength(150)
+                .IsUnicode(false)
+                .HasColumnName("anh");
             entity.Property(e => e.Idkh).HasColumnName("idkh");
             entity.Property(e => e.LoaiQuyen)
                 .HasMaxLength(10)
