@@ -143,7 +143,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr
+        <tr 
           *ngFor="
             let item of product
               | paginate
@@ -157,7 +157,7 @@
           <td>{{ i + 1 }}</td>
           <td><img src="/assets/tintuc/{{ item.anh }}" alt="" style="width: 100px;height: 100px; border-radius: 5px ;"></td>
           <td style="width: 300px;">{{ item.tieude}}</td>
-          <td style="width: 300px;">{{ item.noidung}}</td>
+          <td style="width: 300px">{{ item.noidung}}</td>
           <td>{{ item.ngaydangbai|date:'dd/MM/yy'}}</td>
          <!--  <td>{{ item.hanSudung|date:'dd/MM/yy'}}</td> -->
           <td id="icon_admin">

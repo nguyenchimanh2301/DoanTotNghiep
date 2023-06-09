@@ -46,16 +46,19 @@ export class AccountComponent implements OnInit {
    }
 
   ngOnInit(): void {
-    this.api.get(this.host+'/get_all_loaihomestay').subscribe(data => {
-      this.category = data;
-    })
     this.get();
+  
     this.formAC = new FormGroup({
       'taikhoan': new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(20)]),
       'matkhau': new FormControl('', [Validators.required, Validators.pattern("^((\\+91-?)|0)?[0-9]{10}$")]),
       'loaiquyen': new FormControl('', [Validators.required]),
       'trangthai': new FormControl(''),
+      'user': new FormControl(''),
+
     });
+    this.api.get(this.host+'/get_Cus').subscribe(data => {
+      this.category = data;
+    })
   }
   get taiKhoan() {
     return this.formAC.get('taikhoan')!;
@@ -72,29 +75,41 @@ export class AccountComponent implements OnInit {
  
 
   onFileSelected(event: any) {
-    const file: File = event.target.files[0];
-    console.log(file);
-    this.apisv.uploadFiles(file).subscribe(
-      response => {
-        // Xử lý kết quả thành công
-        console.log('Upload thành công:', response);
-      },
-      error => {
-        // Xử lý lỗi nếu có
-        console.log('Lỗi upload:', error);
-      }
-    );
-  }
+    const files: FileList = event.target.files;
+        this.selectedFile = files.item(0);
+        if (this.selectedFile) {
+          const formData = new FormData();
+          formData.append('file', this.selectedFile);
+          this.apisv.postData(this.host+'/api/FileUpload/user', formData)
+            .subscribe(
+              response => {
+                console.log(response); // Xử lý phản hồi từ API (nếu cần)
+              },
+              error => {
+                console.error(error); // Xử lý lỗi (nếu có)
+              }
+            );
+        } else {
+          console.error("No file selected.");
+        }
 
-  add_Product(item:any){
-    this.image = document.getElementById('files');
+      }
+    add_Product(item:any){
     let obj ={
-        maNguoiDung: "string",
+        idkh: Number(item.user),
         taiKhoan: item.taikhoan,
         matKhau:  item.matkhau,
+        anh: this.selectedFile?.name,
         trangThai: Boolean(item.trangthai),
-        loaiQuyen: item.loaiquyen
-      
+        loaiQuyen: item.loaiquyen,
+        "idkhNavigation": {
+          "id": 0,
+          "tenKh": "string",
+          "email": "string",
+          "diaChi": "string",
+          "sdt": "string",
+          "note": "string"
+        }
     }
     console.log(obj);
     if(this.iscreated==true){
@@ -138,29 +153,9 @@ export class AccountComponent implements OnInit {
   //     });
   //   }
   // }
-  update_Product(item:any){
-    this.image = document.getElementById('files');
-    let obj ={
-      id :item.id,
-      tenPhong: item.tenPhong,
-      idloaiPhong: 1,
-      anh :this.image.files[0].name,
-      dongia : Number(item.dongia),
-      trangthai: true,
-      idloaiPhongNavigation: {
-        "id": 0,
-        "tenLoaiPhong": "string",
-        "ngayTao": "2023-05-19T09:19:21.785Z",
-        "nguoiTao": "string",
-        "ngayCapNhat": "2023-05-19T09:19:21.785Z",
-        "nguoiCapNhat": "string"
-      }
-      }
-    console.log(obj);
-   
-  }
+ 
   DeleteProduct(item:any){
-    if(confirm('bạn có muốn xóa homestay'+item.ten)){
+    if(confirm('bạn có muốn xóa ac'+item.ten)){
       this.api.delete(this.host+'/delete_Account?maacc='+item).subscribe(data => {
         this.delete_succes=false;
         setTimeout(() => {this.delete_succes=true},2000);
@@ -187,7 +182,8 @@ export class AccountComponent implements OnInit {
         matkhau:         [''],
         loaiquyen: [''],
         trangthai:    [''],
-        txt_soluong: [''],
+        user: [''],
+        
     
       });
   }

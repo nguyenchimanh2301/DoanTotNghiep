@@ -6,7 +6,7 @@
     </div>
      -->
     <div class="success-msg" [hidden]="add_succes">
-      <i class="fa fa-check"></i>
+      <i class="fa fa-user"></i>
      THÊM THÀNH CÔNG
     </div>
     
@@ -32,7 +32,7 @@
         </select>
       </div>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <div class="col-md-2" style="float: right;">
+        <!-- <div class="col-md-2" style="float: right;">
           <div class="form-group">
            <label for="">Loại homestay</label>
            <select class="custom-select" name="" id="" (change)="filter($any($event))" >
@@ -40,7 +40,7 @@
              <option  *ngFor="let item of category" value="{{item.id}}">{{item.tenloai}}</option>
            </select>
           </div>
-     </div>
+     </div> -->
         <ul class="navbar-nav mr-auto">
           <li class="nav-item active">
             <a class="nav-link" href="#"> <span class="sr-only">(current)</span></a>
@@ -69,7 +69,7 @@
         <div class="modal-lg" role="document">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title">THÊM HOMESTAY</h5>
+              <h5 class="modal-title">THÊM TÀI KHOẢN</h5>
               <button
                 type="button"
                 class="close"
@@ -84,9 +84,24 @@
             <div class="modal-body">
               <div class="form-group" id="group-form" >
                 <div style="display: none;">
-                  <label for="">Tên homestay </label> <span>*</span>
-                  <input type="text" class="form-control" name="" id="" aria-describedby="helpId" placeholder="" formControlName="idsp"    >
+                  <label for=""></label> <span>*</span>
+                  <!-- <input type="text" class="form-control" name="" id="" aria-describedby="helpId" placeholder="" formControlName="idsp"    > -->
                 </div>
+                <div class="col-md-8">
+                  <div class="form-group">
+                   <label for="">Người dùng</label>
+                   <select class="custom-select" name="" id="" formControlName="user">
+                     <option  *ngFor="let item of category" value={{item.id}}>{{item.tenKh}}</option>
+                   </select>
+                  </div>
+             </div>
+             <!-- <div class="col-md-8">
+             <div class="form-group">
+              <label for="">Ảnh</label>
+              <input type="file" (change)="onFileSelected($any($event))">
+            </div> 
+            </div>  -->
+
                 <div class=" col-md-8">
                   <label for="">Tên tài khoản</label> <span>*</span>
                   <span *ngIf="taiKhoan?.invalid && (taiKhoan.dirty || taiKhoan.touched)">
@@ -118,13 +133,13 @@
                      </select>
                     </div>
                </div>
-               <div class="col-md-8">
+               <!-- <div class="col-md-8">
                     <div class="form-group">
                      <label for="">Ngày kết thúc</label>
                      <input type="date" class="form-control" name="" id="" aria-describedby="helpId" placeholder="" formControlName="ngaykethuc"    >
 
                     </div>
-               </div>
+               </div> -->
               </div> 
               <!-- <div class="form-group">
                   <label for="">Giá tiền*</label>
@@ -197,6 +212,7 @@
           <td>{{ i + 1 }}</td>
           <!-- <td><img src="/assets/Homestay/{{ item.anh }}" alt="" style="width: 100px;height: 100px; border-radius: 5px ;"></td> -->
           <!-- <td style="width: 300px;">{{ item.tenPhong}}</td> -->
+          <!-- <td><img src="/assets/users/{{item.anh}}" alt="" style="width: 100px;height: 100px; border-radius: 5px"></td> -->
           <td>{{ item.taiKhoan}}</td>
           <td>{{ item.matKhau}}</td>
           <td>{{ item.loaiQuyen}}</td>

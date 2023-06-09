@@ -14,7 +14,7 @@ import { Observable } from 'rxjs';
 
 })
 export class ProductComponent implements OnInit {
-  selectedFile: File | null = null;
+  File:any;
   product: any;
   getproduct_id:any
   host = environment.BASE_API;
@@ -75,28 +75,25 @@ export class ProductComponent implements OnInit {
     return this.formSP.get('txt_donvi')!;
   }
 
+
   onFileSelected(event: any) {
-    const files: FileList = event.target.files;
-        this.selectedFile = files.item(0);
-        if (this.selectedFile) {
+    const httpOptions = {
+      headers: new HttpHeaders({'Content-Type': 'application/json'})
+    }
+    this.File = event.target.files[0];
+    console.log( this.File);
           const formData = new FormData();
-          formData.append('file', this.selectedFile);
-          this.api.post(this.host+'/api/FileUpload', formData)
-            .subscribe(
-              response => {
-                console.log(response); // Xử lý phản hồi từ API (nếu cần)
-              },
-              error => {
-                console.error(error); // Xử lý lỗi (nếu có)
-              }
-            );
-        } else {
-          console.error("No file selected.");
-        }
+          formData.append('file', this.File);
+          this.api.post('https://localhost:44310/api/FileUpload', formData,httpOptions)
+  .           toPromise().then(res=>{
+
+  },
+  err=>{
+    console.log(err);
+  } );
+  }
 
 
-
-      }
   
    
 
@@ -107,7 +104,7 @@ export class ProductComponent implements OnInit {
     id :item.id,
     tenPhong: item.ten_Phong,
     idloaiPhong: this.selectedOption,
-    anh :this.selectedFile?.name,
+    anh :this.File.name,
     dongia : item.don_gia,
     trangthai: false,
     idloaiPhongNavigation: {
@@ -218,7 +215,7 @@ export class ProductComponent implements OnInit {
       this.get();
     }
     else{
-      this.api.get(this.host+'/Search_Homstay?idloai='+item).subscribe(res=>{
+      this.api.get(this.host+'/get_all_homestay_by_idloai?id='+item).subscribe(res=>{
         this.product = res;
       })
     }

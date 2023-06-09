@@ -15,7 +15,7 @@ export class ApiService {
 
     public post(url: string, obj: any) {
         const body = new FormData();
-        body.append('file', obj.value1); // Thêm dữ liệu value1 với khóa key1
+        body.append('file', obj.value); // Thêm dữ liệu value1 với khóa key1
         return this._http.post<any>(this.host + url, body).pipe(
           map((res: any) => {
             return res;
@@ -59,12 +59,15 @@ export class ApiService {
         const formData = new FormData();
         formData.append('file', file); // Thay 'file' bằng tên trường tương ứng trong API
         const headers = new HttpHeaders();
-        // Đảm bảo Content-Type phù hợp
-        console.log(formData.getAll('file'))
 
         headers.append('Content-Type', 'multipart/form-data');
         console.log(formData);
         return this._http.post(url, formData, { headers });
         
+      }
+      postData(url: string, data: any) {
+        const headers = new HttpHeaders().set('Content-Type', 'application/json'); // Đảm bảo kiểu dữ liệu là application/json
+    
+        return this._http.post(url, data, { headers: headers });
       }
 }
