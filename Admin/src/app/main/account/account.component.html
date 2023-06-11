@@ -121,7 +121,7 @@
                       <label for="">Loại quyền</label>
                       <select class="custom-select" name="" id="" formControlName="loaiquyen">
                         <option>Admin</option>
-                        <option>Nhân viên</option>
+                        <option>User</option>
                       </select>
                      </div>
                 </div>
@@ -192,8 +192,8 @@
           <th>Mật khẩu</th>
           <th>loại quyền</th>
           <th>Trạng thái</th>
-          <th>Ngày bắt đầu</th>
-          <th>Ngày kết thúc</th>
+          <!-- <th>Ngày bắt đầu</th>
+          <th>Ngày kết thúc</th> -->
           <th>Chức năng</th>
         </tr>
       </thead>
@@ -217,8 +217,8 @@
           <td>{{ item.matKhau}}</td>
           <td>{{ item.loaiQuyen}}</td>
           <td>{{ item.trangthai==true?"Hoạt động":"Offline"}}</td>
-          <td>{{ item.ngayBatDau|date:'dd/MM/yy HH:mm:ss'}}</td>
-          <td>{{ item.ngayKetThuc|date:'dd/MM/yy HH:mm:ss'}}</td>
+          <!-- <td>{{ item.ngayBatDau|date:'dd/MM/yy HH:mm:ss'}}</td>
+          <td>{{ item.ngayKetThuc|date:'dd/MM/yy HH:mm:ss'}}</td> -->
           <td id="icon_admin">
             <button (click)="DeleteProduct(item.maTaiKhoan)" type="button" class="btn btn-danger"><i class="fa fa-trash" aria-hidden="true" ></i></button>
             <button (click)="ShowModal(item.maTaiKhoan)" type="button" class="btn btn-warning"><i class="fa fa-edit" aria-hidden="true"></i></button>

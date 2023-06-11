@@ -4,8 +4,8 @@ import { LoginComponent } from './login/login.component';
 import { AuthGuard } from './core/guards/auth.guard';
 
 const routes: Routes = [
-  { path: '', loadChildren: () => import('./main/main.module').then(m => m.MainModule),canActivate: [AuthGuard]},
-  // { path: '', loadChildren: () => import('./main/main.module').then(m => m.MainModule)},
+  // { path: '', loadChildren: () => import('./main/main.module').then(m => m.MainModule),canActivate: [AuthGuard]},
+  { path: '', loadChildren: () => import('./main/main.module').then(m => m.MainModule)},
   // { path: '', loadChildren: () => import('./main/main.module').then(m => m.MainModule)},
   { path: 'login', component: LoginComponent },
 ];

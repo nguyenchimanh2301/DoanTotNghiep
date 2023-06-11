@@ -84,7 +84,7 @@
               <div class="form-group" id="group-form">
                 <div style="display: none;">
                   <label for="">Tên homestay </label> <span>*</span>
-                  <input type="text" class="form-control" name="" id="" aria-describedby="helpId" placeholder="" formControlName="idsp"    >
+                  <input type="text" class="form-control" name="" id="" aria-describedby="helpId" placeholder="" formControlName="id"    >
                 </div>
                 <div class=" col-md-5">
                   <label for="">Tên Homestay </label> <span>*</span>
@@ -110,6 +110,10 @@
                 </span>
                   <input type="text" class="form-control" name="" id="" aria-describedby="helpId" placeholder="" formControlName="don_gia" >
                 </div> 
+                <div class=" col-md-5">
+                  <label for="">Địa chỉ</label> <span></span>
+                  <input type="text" class="form-control" name="" id="" aria-describedby="helpId" placeholder="" formControlName="dia_chi"    >
+                </div>
                 <div class="form-group">
                   <label for="">Mô tả</label>
                   <ckeditor formControlName="txt_mota" [editor]="Editor"></ckeditor>
@@ -145,7 +149,7 @@
           <th>Tên loại</th>
           <th>Đơn Giá thuê</th>
           <th>Trạng thái</th>
-
+          <th>Địa chỉ</th>
           <!-- <th>Ngày sản xuất</th>
           <th>Hạn sử dụng</th> -->
           <th>Chức năng</th>
@@ -165,10 +169,11 @@
         >
           <td>{{ i + 1 }}</td>
           <td><img src="/assets/Homestay/{{ item.anh }}" alt="" style="width: 100px;height: 100px; border-radius: 5px ;"></td>
-          <td style="width: 300px;">{{ item.tenPhong}}</td>
+          <td style="width: 500px;">{{ item.tenPhong}}</td>
           <td style="width: 300px;">{{ item.tenLoaiPhong}}</td>
           <td>{{ item.dongia|currency:'VND'}}</td>
-          <td>{{ item.trangthai==true?"Còn trống":"Đã đặt chỗ"}}</td>
+          <td><button class="btn {{color}}">{{ item.trangthai==false?"Còn trống":"Đã đặt chỗ"}}</button></td>
+          <td>{{ item.diaChi}}</td>
 
           <!-- <td>{{ item.ngaySanxuat|date:'dd/MM/yy'}}</td>
           <td>{{ item.hanSudung|date:'dd/MM/yy'}}</td> -->

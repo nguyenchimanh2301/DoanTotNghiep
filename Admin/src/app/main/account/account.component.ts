@@ -29,6 +29,7 @@ export class AccountComponent implements OnInit {
   add_succes = true;
   delete_succes = true;
   iscreated:any = true;
+  admin = true;
   category:any;
   load = false;
   public file: any;
@@ -116,14 +117,17 @@ export class AccountComponent implements OnInit {
       this.api.post(this.host+'/add_Account',obj).subscribe(data => {
         this.active = true;
         this.add_succes=false
-        setTimeout(()=>{this.add_succes=true;},2000);})
+        setTimeout(()=>{this.add_succes=true;},2000);});
+        this.get();
     }
     else{
       this.api.put(this.host+'/update_Account',obj).subscribe(data => {
         this.get();
        this.active = true;
        this.add_succes=false
-       setTimeout(()=>{this.add_succes=true;},2000);})
+       setTimeout(()=>{this.add_succes=true;},2000);});
+       this.get();
+
     }
   }
   ShowModal(item:any){

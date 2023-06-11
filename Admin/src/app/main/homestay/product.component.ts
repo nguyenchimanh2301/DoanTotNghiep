@@ -32,6 +32,7 @@ export class ProductComponent implements OnInit {
   delete_succes = true;
   title:any = "THÊM";
   category:any;
+  color:any ;
   load = false;
   public file: any;
   public Editor = ClassicEditor;
@@ -49,6 +50,7 @@ export class ProductComponent implements OnInit {
       'ten_Phong': new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(20)]),
       'don_gia': new FormControl('', [Validators.required, Validators.pattern("^((\\+91-?)|0)?[0-9]{10}$")]),
       'lsp': new FormControl('', [Validators.required]),
+      'dia_chi': new FormControl('', [Validators.required]),
       
       // 'txt_mota': new FormControl(''),
       // 'txt_soluong': new FormControl('', [Validators.required, Validators.pattern("^((\\+91-?)|0)?[0-9]{10}$")]),
@@ -67,8 +69,8 @@ export class ProductComponent implements OnInit {
   get mota() {
     return this.formSP.get('txt_mota')!;
   }
-  get soluong() {
-    return this.formSP.get('txt_soluong')!;
+  get diachi() {
+    return this.formSP.get('dia_chi')!;
   }
   
   get donvi() {
@@ -77,21 +79,22 @@ export class ProductComponent implements OnInit {
 
 
   onFileSelected(event: any) {
-    const httpOptions = {
-      headers: new HttpHeaders({'Content-Type': 'application/json'})
-    }
-    this.File = event.target.files[0];
-    console.log( this.File);
-          const formData = new FormData();
-          formData.append('file', this.File);
-          this.api.post('https://localhost:44310/api/FileUpload', formData,httpOptions)
-  .           toPromise().then(res=>{
+  const files: FileList = event.target.files;
+  this.file = files.item(0);
+  const formData = new FormData();
+  formData.append('file', this.file);
+  this.api.post('https://localhost:44310/api/FileUpload', formData, {
+    reportProgress: true,
+    responseType: 'json'})
+    .toPromise()
+    .then(res => {
+      console.log("ok");
+    },
+    err => {
+      console.log(err);
+    });
+}
 
-  },
-  err=>{
-    console.log(err);
-  } );
-  }
 
 
   
@@ -105,6 +108,7 @@ export class ProductComponent implements OnInit {
     tenPhong: item.ten_Phong,
     idloaiPhong: this.selectedOption,
     anh :this.File.name,
+    diaChi: item.dia_chi,
     dongia : item.don_gia,
     trangthai: false,
     idloaiPhongNavigation: {
@@ -144,6 +148,7 @@ export class ProductComponent implements OnInit {
         ten_Phong:   [this.getproduct_id.ten,Validators.required],
         lsp:         [this.getproduct_id.idloai,Validators.required],
         don_gia: [this.getproduct_id.gia,Validators.required],
+        dia_chi: [this.getproduct_id.diaChi,Validators.required],
 
         // txt_mota:    [this.getproduct_id.motaSp,Validators.required],
         // txt_soluong: [this.getproduct_id.so_luong,Validators.required],
@@ -185,20 +190,32 @@ export class ProductComponent implements OnInit {
   }
   Show(value:any){
       this.active=false;
+      this.title="THÊM";
+     if(value==0){
       this.formSP = this.fb.group({
         ten_Phong   : [''],
         lsp:         [''],
         don_gia: [''],
-        // txt_mota:    [''],
+        dia_chi:    [''],
         // txt_soluong: [''],
         // txt_donvi:   [''],
 
       });
+     }
   }
   get():void{
     this.api.get(this.host+'/get_all_homestay').subscribe(data=>{
       this.product = data;
-      console.log(data)
+       
+      this.product.forEach((element:any) => {
+        if(element.trangthai==false){
+          this.color="btn-warning"
+        }
+        else{
+          this.color="btn-success";
+        }
+      });
+      
       this.load = true;
     });
   }

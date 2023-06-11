@@ -28,6 +28,7 @@ export class CustomerComponent implements OnInit {
   constructor(private api:HttpClient,private fb:FormBuilder) { }
 
   ngOnInit(): void {
+    
     this.get();
     this.formMail = new FormGroup({
       'tieu_de': new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(20)]),

@@ -63,9 +63,10 @@
           <th style="width: 50px">STT</th>
           <th>Mã Đơn Hàng</th>
           <th>Tên Khách Hàng</th>
+          <th>Tổng thanh toán</th>
           <th>Ngày đặt</th>
           <th>Ngày Trả</th>
-          <th>Trạng Thái</th>
+          <th>Chức năng</th>
 
         </tr>
       </thead>
@@ -84,10 +85,10 @@
           <td>{{ i + 1 }}</td>
           <td>{{ item.id }}</td>
           <td>{{ item.tenKh}}</td>
+          <td>{{ item.thanhtien}}</td>
           <td>{{ item.ngaydat|date:'dd/MM/yy'}}</td>
           <td>{{ item.ngaytra|date:'dd/MM/yy'}}</td>
-          <td>{{ item.trangthai}}</td>
-
+          <!-- <td>{{ item.trangthai}}</td> -->
           <td id="icon_admin">
             <button  type="button" class="btn btn-danger"><i class="fa fa-trash" aria-hidden="true" ></i></button>
             <button  type="button" class="btn btn-success" (click)="show(item)"><i class="fa fa-eye" aria-hidden="true"></i></button>
@@ -101,7 +102,6 @@
           <td></td>
           <td></td>
           <td>
-          
           </td>
         </tr>
       </tfoot>

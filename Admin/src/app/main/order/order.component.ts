@@ -71,7 +71,8 @@ export class OrderComponent implements OnInit {
         <h2>Thông tin phòng</h2>
         <p>Tên phòng: ${this.detail_order.tenPhong}</p>
         <p>Loại phòng:${this.detail_order.tenLoaiPhong}</p>
-        
+        <p>Ngày đặt: ${formattedDate}</p>
+        <p>Ngày trả:${formattedDate2}</p>
       </div>
       <div class="guest-details">
         <h2>Thông tin khách hàng</h2>
