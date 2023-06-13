@@ -50,7 +50,8 @@ export class OrderComponent implements OnInit {
     this.modal= false;
     let html:string= "";
     this.orderdetail = false;
-    this.api.get(this.host+'/get_chitiet_hoadon?madon='+item.id).subscribe(data =>{
+    this.api.get(this.host+'/get_chitiet_datphong?madon='+item.id).subscribe(data =>{
+      console.log(item.id);
       this.detail_order = data;
       console.log(this.detail_order);
       const formattedDate = new Date(this.detail_order.ngaydat).toLocaleString('vi-VN', { 

@@ -150,7 +150,6 @@ export class EmployeeComponent implements OnInit {
   //     }
   onFileSelected(event: any): void {
     const file: File = event.target.files[0];
-  
     this.up.uploadFile(file)
       .then(response => {
         console.log('File uploaded successfully.');

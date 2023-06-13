@@ -33,6 +33,8 @@ export class ProductComponent implements OnInit {
   title:any = "THÊM";
   category:any;
   color:any ;
+  nameanh:any ;
+
   load = false;
   public file: any;
   public Editor = ClassicEditor;
@@ -81,6 +83,7 @@ export class ProductComponent implements OnInit {
   onFileSelected(event: any) {
   const files: FileList = event.target.files;
   this.file = files.item(0);
+  this.nameanh = this.file.name;
   const formData = new FormData();
   formData.append('file', this.file);
   this.api.post('https://localhost:44310/api/FileUpload', formData, {
@@ -102,12 +105,11 @@ export class ProductComponent implements OnInit {
 
   add_Product(item:any){
 
-    this.image = document.getElementById('files');
     let obj ={
     id :item.id,
     tenPhong: item.ten_Phong,
     idloaiPhong: this.selectedOption,
-    anh :this.File.name,
+    anh :this.nameanh,
     diaChi: item.dia_chi,
     dongia : item.don_gia,
     trangthai: false,
@@ -141,13 +143,14 @@ export class ProductComponent implements OnInit {
     this.title = "Sửa"
     this.active= false;
     this.api.get(this.host+'/getht_by_id?id='+item).subscribe(data=>{
+      console.log(item);
       this.getproduct_id = data;
       console.log(this.getproduct_id);
       this.formSP = this.fb.group({
         id:   [this.getproduct_id.id,Validators.required],
-        ten_Phong:   [this.getproduct_id.ten,Validators.required],
-        lsp:         [this.getproduct_id.idloai,Validators.required],
-        don_gia: [this.getproduct_id.gia,Validators.required],
+        ten_Phong:   [this.getproduct_id.tenPhong,Validators.required],
+        lsp:         [this.getproduct_id.idloaiPhong,Validators.required],
+        don_gia: [this.getproduct_id.dongia,Validators.required],
         dia_chi: [this.getproduct_id.diaChi,Validators.required],
 
         // txt_mota:    [this.getproduct_id.motaSp,Validators.required],
