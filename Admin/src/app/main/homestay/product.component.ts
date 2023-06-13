@@ -86,7 +86,7 @@ export class ProductComponent implements OnInit {
   this.nameanh = this.file.name;
   const formData = new FormData();
   formData.append('file', this.file);
-  this.api.post('https://localhost:44310/api/FileUpload', formData, {
+  this.api.post('https://localhost:44310/api/Uphomestay', formData, {
     reportProgress: true,
     responseType: 'json'})
     .toPromise()

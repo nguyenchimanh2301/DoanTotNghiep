@@ -21,8 +21,8 @@ export class NewComponent implements OnInit {
   host = environment.BASE_API;
   page:number = 1;
   count:number = 0;
-   public tablesize:number = 5;
-  table_numberSize:any = [5,10,15];
+   public tablesize:number = 3;
+  table_numberSize:any = [3,5];
   size:any = 5;
   title:any = "THÊM";
   formTT!:FormGroup
@@ -34,6 +34,7 @@ export class NewComponent implements OnInit {
   iscreated:any = false;
   category:any;
   load = false;
+  anh:any;
   public file: any;
   public Editor = ClassicEditor;
   public ckEditorInstance: any;
@@ -76,27 +77,45 @@ export class NewComponent implements OnInit {
   get loaiquyen() {
     return this.formTT.get('loaiquyen')!;
   }
-  
   onFileSelected(event: any) {
     const files: FileList = event.target.files;
-        this.selectedFile = files.item(0);
-        if (this.selectedFile) {
-          const formData = new FormData();
-          formData.append('file', this.selectedFile);
-          this.api.post(this.host+'/api/FileUpload/api/Upanh', formData)
-            .subscribe(
-              response => {
-                console.log(response); // Xử lý phản hồi từ API (nếu cần)
-              },
-              error => {
-                console.error(error); // Xử lý lỗi (nếu có)
-              }
-            );
-        } else {
-          console.error("No file selected.");
-        }
+    this.file = files.item(0);
+    console.log(this.file);
+    this.anh = this.file.name;
+    const formData = new FormData();
+    formData.append('file', this.file);
+    this.api.post('https://localhost:44310/api/Upanh', formData, {
+      reportProgress: true,
+      responseType: 'json'})
+      .toPromise()
+      .then(res => {
+        console.log("ok");
+      },
+      err => {
+        console.log(err);
+      });
+  }
+  // onFileSelected(event: any) {
+  //   const files: FileList = event.target.files;
+  //       this.selectedFile = files.item(0);
+  //       if (this.selectedFile) {
+  //         const formData = new FormData();
+  //         formData.append('file', this.selectedFile);
+  //         this.api.post(this.host+'/api/FileUpload/api/Upanh', formData)
+  //           .subscribe(
+  //             response => {
+  //             this.anh = this.selectedFile?.name;
+  //               console.log(response); // Xử lý phản hồi từ API (nếu cần)
+  //             },
+  //             error => {
+  //               console.error(error); // Xử lý lỗi (nếu có)
+  //             }
+  //           );
+  //       } else {
+  //         console.error("No file selected.");
+  //       }
 
-      }
+  //     }
       onEditorReady(event: any) {
         this.ckEditorInstance = event.editor;
        const textContent = this.ckEditorInstance.getData();
@@ -116,7 +135,7 @@ const textContent = htmlToText(item.noidung);
      let obj ={
         "idbaiviet": item.id,
         "iduser": 0,
-        "anh": this.selectedFile?.name,
+        "anh": this.anh,
         "tieude": item.tieude,
         "noidung": textContent,
         "ngaydangbai": currd,

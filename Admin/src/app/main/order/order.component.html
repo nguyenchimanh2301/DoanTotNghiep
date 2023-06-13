@@ -1,6 +1,48 @@
 
 <div class="row-toolbar">
-  
+  <div class="error-msg" [hidden]="delete_succes">
+    <i class="fa fa-times-circle"></i>
+   XÓA THÀNH CÔNG
+  </div>
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div>
+        <select name="" id="" (change)="sizeChange($any($event))">
+          <option *ngFor="let item of table_numberSize"  value="{{item}}">{{item}}</option>
+       
+        </select>
+      </div>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div class="col-md-2" style="float: right;">
+          <!-- <div class="form-group">
+           <label for="">Loại homestay</label>
+           <select class="custom-select" name="" id="" (change)="filter($any($event))" >
+              <option value="0">Tất cả</option>
+             <option  *ngFor="let item of category" value={{item.id}}>{{item.tenloai}}</option>
+           </select>
+          </div> -->
+     </div>
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="#"> <span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#"></a>
+          </li>
+        
+          <li class="nav-item">
+            <a class="nav-link disabled" href="#"></a>
+          </li>
+        </ul>
+        <form class="form-inline my-2 my-lg-0">
+          <input class="form-control mr-sm-2" type="search" placeholder="Tìm kiếm" aria-label="Search" id="searchs">
+          <button class="btn btn-outline-success my-2 my-sm-0" type="submit" (click)="search()">Tìm kiếm</button>
+        </form>
+      </div>
+    </nav>
     <!-- <div class="info-msg" [hidden]="add_succes">
       <i class="fa fa-info-circle"></i>
       This is an info message.
@@ -25,12 +67,8 @@
         <span class="navbar-toggler-icon"></span>
       </button>
      <div> -->
-      <div class="page_size">
-        <select name="" id="" (change)="sizeChange($any($event))">
-          <option *ngFor="let item of table_numberSize"  value="{{item}}">{{item}}</option>
-       
-        </select>
-      </div>
+     
+      
       <!-- <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
           <li class="nav-item active">
@@ -61,7 +99,7 @@
       <thead>
         <tr>
           <th style="width: 50px">STT</th>
-          <th>Mã Đơn Hàng</th>
+          <!-- <th>Mã Đơn Hàng</th> -->
           <th>Tên Khách Hàng</th>
           <th>Tổng thanh toán</th>
           <th>Ngày đặt</th>
@@ -83,14 +121,14 @@
           "
         >
           <td>{{ i + 1 }}</td>
-          <td>{{ item.id }}</td>
+          <!-- <td>{{ item.id }}</td> -->
           <td>{{ item.tenKh}}</td>
-          <td>{{ item.thanhtien}}</td>
+          <td>{{ item.thanhtien|currency:'VND'}}</td>
           <td>{{ item.ngaydat|date:'dd/MM/yy'}}</td>
           <td>{{ item.ngaytra|date:'dd/MM/yy'}}</td>
           <!-- <td>{{ item.trangthai}}</td> -->
           <td id="icon_admin">
-            <button  type="button" class="btn btn-danger"><i class="fa fa-trash" aria-hidden="true" ></i></button>
+            <button  type="button" class="btn btn-danger"(click)="delet(item)"><i class="fa fa-trash" aria-hidden="true" ></i></button>
             <button  type="button" class="btn btn-success" (click)="show(item)"><i class="fa fa-eye" aria-hidden="true"></i></button>
           </td>
         </tr>
@@ -114,14 +152,7 @@
     >
     </pagination-controls>
       </div>
-
-  
 </div>
-
-
-
-
-  
 <div [hidden]="modal" id="modal" >
   <div class="container bootstrap snippets bootdeys" id="formss">
   <div class="row" >
@@ -135,8 +166,8 @@
         <div class="row footer">
         <div class="col-xs-6 margintop">
   
-          <button class="btn btn-success" (click)="printHtml()" id="invoice-print"><i class="fa fa-print"></i> Print Invoice</button>
-          <button class="btn btn-danger"><i class="fa fa-envelope-o"></i> Mail Invoice</button>
+          <button class="btn btn-success" (click)="printHtml()" id="invoice-print"><i class="fa fa-print"></i> IN HÓA ĐƠN</button>
+          <button class="btn btn-danger"><i class="fa fa-envelope-o"></i> PHẢN HỒI</button>
         </div>
        
         </div>

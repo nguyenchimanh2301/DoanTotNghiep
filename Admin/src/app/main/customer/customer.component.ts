@@ -83,7 +83,7 @@ export class CustomerComponent implements OnInit {
   }
   this.api.post(this.host+'/api/Email',obj).subscribe(data => {
     this.active = true;
-    setTimeout(()=>{this.send_success=true;},2000);})
+    setTimeout(()=>{this.send_success=true;},3000);})
     
   };
 }

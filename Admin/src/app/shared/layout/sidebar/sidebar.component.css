@@ -1,0 +1,20 @@
+.info-msg,
+.success-msg,
+.warning-msg,
+.error-msg {
+  margin: 10px 0;
+  padding: 10px;
+  border-radius: 3px 3px 3px 3px;
+  width: 300px;
+  position: absolute;
+  right: 10%;
+  z-index: 100;
+}
+.info-msg {
+  color: #059;
+  background-color: #BEF;
+}
+.success-msg {
+  color: #270;
+  background-color: #DFF2BF;
+}

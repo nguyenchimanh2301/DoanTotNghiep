@@ -14,6 +14,7 @@ export class LoginComponent implements OnInit {
   public submitted = false;
   public loading = false;
   public returnUrl!:string;
+  public hide:any=true;
   public error = '';
   constructor(private auService:AuthenticationService,private router:Router,private route:ActivatedRoute) {
     if(this.auService.userValue){
@@ -43,8 +44,10 @@ export class LoginComponent implements OnInit {
     this.auService.login(value.txt_user,value.txt_password)
     .pipe(first()).subscribe(
       (data)=>{
-        alert("Đăng nhập thành công")
-        this.router.navigate([this.returnUrl]);
+        this.hide=false;
+        setTimeout(()=>{this.router.navigate([this.returnUrl]);},3000);
+
+        
       },
       (error)=>{
         this.error = error;

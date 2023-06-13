@@ -67,13 +67,10 @@
     background-color: #FFBABA;
   }
   
-  
   html {
     font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; 
   
   }
-  
-  
   #group-form{
     display: flex;
     align-items: center;

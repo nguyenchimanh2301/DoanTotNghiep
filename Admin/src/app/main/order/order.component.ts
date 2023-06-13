@@ -16,12 +16,15 @@ export class OrderComponent implements OnInit {
   host = environment.BASE_API;
   page:number = 1;
   count:number = 0;
+  delete_succes = true;
   public tablesize:number = 5;
   table_numberSize:any = [5,10,15];
   size:any = 5;
   active=true;
   order:any;
   khach:any;
+  idp:any;
+
   detail_order:any;
   orderdetail=true;
   modal = true;
@@ -51,9 +54,13 @@ export class OrderComponent implements OnInit {
     let html:string= "";
     this.orderdetail = false;
     this.api.get(this.host+'/get_chitiet_datphong?madon='+item.id).subscribe(data =>{
-      console.log(item.id);
       this.detail_order = data;
       console.log(this.detail_order);
+      this.api.put(`https://localhost:44310/traphong?id=${this.detail_order.idp}`,{}).subscribe(x=>{
+        console.log(this.idp)
+       });
+      console.log(item.id);
+     this.idp = this.detail_order.idp;
       const formattedDate = new Date(this.detail_order.ngaydat).toLocaleString('vi-VN', { 
         dateStyle: 'short',
         timeStyle: 'short'
@@ -71,7 +78,6 @@ export class OrderComponent implements OnInit {
       <div class="room-details">
         <h2>Thông tin phòng</h2>
         <p>Tên phòng: ${this.detail_order.tenPhong}</p>
-        <p>Loại phòng:${this.detail_order.tenLoaiPhong}</p>
         <p>Ngày đặt: ${formattedDate}</p>
         <p>Ngày trả:${formattedDate2}</p>
       </div>
@@ -160,6 +166,13 @@ export class OrderComponent implements OnInit {
 // window.URL.revokeObjectURL(url);
 //   }
 public printHtml() {
+
+
+
+
+
+
+
   const formattedDate = new Date(this.detail_order.ngaydat).toLocaleString('vi-VN', { 
     dateStyle: 'short',
     timeStyle: 'short'
@@ -303,5 +316,22 @@ public printHtml() {
         document.body.removeChild(a);
         window.URL.revokeObjectURL(url);
       });
+  }
+  delet(value:any){
+    if(confirm('bạn có muốn xóa đơn hàng?')){
+      this.api.delete(this.host+'/Delete_donhang?id='+value.id).subscribe(data => {
+        this.delete_succes=false;
+        setTimeout(() => {this.delete_succes=true},2000);
+        this.get();
+       })
+    }
+  }
+  search(){
+    let name = (<HTMLInputElement>document.getElementById('searchs')).value;
+    console.log(name);
+    this.api.get(this.host+'/tim_phong_hd?name='+name).subscribe(data=>{
+      this.order = data;
+      console.log(this.order);
+    });
   }
 }

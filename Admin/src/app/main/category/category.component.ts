@@ -38,7 +38,7 @@ export class CategoryComponent implements OnInit {
   get tenlsp() {
     return this.formLSP.get('txt_tenlsp')!;
   }
-  
+ 
  
   add_Product(item:any){
     let obj ={
@@ -108,11 +108,13 @@ export class CategoryComponent implements OnInit {
     this.active = true;
   }
   Show(value:any){
-      if(value==this.Mode){
-      this.active=false;
+      this.iscreate = true;
+      if(value==0){
+        this.active=false;
+        this.formLSP = this.fb.group({
+          txt_tenlsp   : [''],
+        });
       }
-  this.iscreate = true;
-
   }
   get():void{
     this.api.get(this.host+'/get_all_loaihomestay').subscribe(data=>{
