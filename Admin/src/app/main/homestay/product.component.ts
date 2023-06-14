@@ -207,7 +207,7 @@ export class ProductComponent implements OnInit {
      }
   }
   get():void{
-    this.api.get(this.host+'/get_all_homestay').subscribe(data=>{
+    this.api.get(this.host+'/get_moi').subscribe(data=>{
       this.product = data;
        
       this.product.forEach((element:any) => {
